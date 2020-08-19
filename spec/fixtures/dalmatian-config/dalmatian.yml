@@ -1,0 +1,202 @@
+---
+parameter-store-path-prefix: /dalmatian-variables/
+
+account-bootstrap:
+  variables:
+    region: eu-west-2
+    root_domain_zone: dalmatian.dxw.net
+    dalmatian_read_users:
+      - Joe
+      - Ashley
+    dalmatian_admin_users:
+      - Harper
+      - Pat
+
+ci:
+  variables:
+    region: eu-west-2
+    prci_github_owner: dxw
+    prci_github_repository: dalmatian
+    prci_codebuild_image: thedxw/testing-terraform-docker:latest
+    bpsp_source_branch: master
+    bpbp_codebuild_compute_type: BUILD_GENERAL1_SMALL
+    bpbp_codebuild_image: thedxw/testing-terraform-docker:latest
+
+infrastructure-defaults:
+  variables:
+    region: eu-west-2
+    cidr: 10.0.0.0/16
+    root_domain_zone: dalmatian.dxw.net
+    internal_domain_zone: dalmatian.internal
+    ecs_private_subnets:
+      - availability_zone: "eu-west-2a"
+        cidr: 10.0.128.0/24
+      - availability_zone: "eu-west-2b"
+        cidr: 10.0.129.0/24
+      - availability_zone: "eu-west-2c"
+        cidr: 10.0.130.0/24
+    extra_public_subnets:
+      - availability_zone: eu-west-2a
+        cidr: 10.0.0.0/24
+      - availability_zone: eu-west-2b
+        cidr: 10.0.1.0/24
+      - availability_zone: eu-west-2c
+        cidr: 10.0.2.0/24
+    instances_key_name: dalmatian-ecs-instances
+    instance_type: t2.medium
+    min_servers: 2
+    max_servers: 4
+    associate_public_ip_address: 0
+    docker_storage_size: 40
+    dockerhub_email: ''
+    dockerhub_token: ''
+    enable_efs: "false"
+    efs_dirs: []
+
+infrastructures:
+  new-dedicated-cluster:
+    dalmatian_config_source:
+      - git@github.com:dxw/awesome-app-dalmatian-config
+    account_id: 123456789012
+    cluster:
+      create: true
+    rds:
+      - identifier: testservice
+        in_use_by:
+          - test-service
+        engine: 'postgres'
+        instance_class: 'db.t2.micro'
+        engine_version: '11.4'
+        allocated_storage: 20
+        db_name: 'testapp'
+        port: 5432
+        maintenance_window: 'mon:19:00-mon:19:30'
+        backup_window: '09:00-10:00'
+        force_ssl: true
+        parameter_store_path_db_url_name: 'DATABASE_URL'
+    elasticache_cluster:
+      - identifier: testredis
+        in_use_by:
+          - test-service
+        engine: 'redis'
+        node_type: 'cache.t2.micro'
+        node_count: 1
+        engine: 'redis'
+        engine_version: '5.0.6'
+        port: 6379
+        maintenance_window: 'mon:19:00-mon:22:00'
+        snapshot_window: '09:00-10:00'
+        parameter_store_path_elasticache_cluster_url_name: 'REDIS_URL'
+    services:
+      - name: test-service
+        parameter_store_path:
+          staging: '/test-path'
+        parameter_store_key:
+          staging: 'arn:aws:kms:eu-west-2:000000000000:key/00000000-0000-0000-0000-000000000000'
+        container_count: "2"
+        cloudfront:
+          create: true
+          offline_page_http_status:
+            - "500"
+            - "501"
+            - "502"
+            - "503"
+            - "504"
+          custom_origins:
+            staging:
+              - origin: test-media-staging.s3.amazonaws.com
+                id: test-media-staging-s3
+            production:
+              - origin: test-media-production.s3.amazonaws.com
+                id: test-media-production-s3
+          custom_behaviors:
+            staging:
+              - path_patterns:
+                  - '/media/*'
+                target_origin_id: test-media-staging-s3
+                min_ttl: 1200
+                default_ttl: 3600
+                max_ttl: 86400
+            production:
+              - path_patterns:
+                  - '/media/*'
+                target_origin_id: test-media-production-s3
+                min_ttl: 1200
+                default_ttl: 3600
+                max_ttl: 86400
+        lb_ip_whitelist:
+          - name: public
+            cidr: 0.0.0.0/0
+        health_check_path: '/check'
+        health_check_grace_period: '0'
+        domain_names:
+          staging:
+            - example-domain-name.co.uk
+        lb_ssl_certificate:
+          staging: 'arn:aws:acm:lb-region-0:000000000000:certificate/00000000-0000-0000-0000-000000000000'
+        cloudfront_ssl_certificate:
+          staging: 'arn:aws:acm:us-east-1:000000000000:certificate/00000000-0000-0000-0000-000000000000'
+        image_source: build_from_github_repo
+        image_location: git@github.com:dxw/dalmatian-test-app
+        buildspec: 'buildspec.yml'
+        container_port: 3100
+        container_command: ["/docker-entrypoint.sh", "rails", "server"]
+        container_volumes:
+          - name: test-volume
+            host_path: /mnt/test
+            container_path: /test
+        scheduled_tasks:
+          - name: test-scheduled-task
+            command: ["rake", "do:something"]
+            schedule_expression: "cron(0 12 * * ? *)"
+
+    shared_loadbalancer:
+      - name: test-lb-1
+        in_use_by:
+          - test-service
+    environments:
+      production:
+        instance_type: t2.medium
+        min_servers: 2
+        max_servers: 4
+      staging:
+        instance_type: t2.small
+        min_servers: 2
+        max_servers: 4
+        track_revision: feature/experiment
+
+  shared-new-cluster:
+    account_id: 123456789012
+    cluster:
+      create: true
+    environments:
+      production:
+        instance_type: t2.medium
+        min_servers: 2
+        max_servers: 10
+      staging:
+        instance_type: t2.small
+        min_servers: 2
+        max_servers: 10
+
+  existing-shared-cluster-staging:
+    dalmatian_config_source:
+      - git@github.com:dxw/funky-app-dalmatian-config
+    account_id: 123456789012
+    cluster:
+      create: false
+      name: shared-cluster
+    environments:
+      staging:
+        example_var: foo
+
+  existing-shared-cluster-production:
+    dalmatian_config_source:
+      - git@github.com:dxw/neat-app-dalmatian-config
+    account_id: 123456789012
+    cluster:
+      create: false
+      name: shared-cluster
+    environments:
+      production:
+        example_var: bar
