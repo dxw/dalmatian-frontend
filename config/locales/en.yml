@@ -1,3 +1,5 @@
 en:
   app:
     name: "Dalmatian Frontend"
+  page_title:
+    infrastructures: "Infrastructures"
