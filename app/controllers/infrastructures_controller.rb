@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class VisitorsController < ApplicationController
+class InfrastructuresController < ApplicationController
   def index
     @infrastructures = FindDalmatianConfiguration.new.infrastructures
   end

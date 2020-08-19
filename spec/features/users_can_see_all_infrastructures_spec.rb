@@ -11,6 +11,7 @@ feature "Users can see all infrastructures" do
 
     visit root_path
 
+    expect(page).to have_content(I18n.t("app.name"))
     expect(page).to have_content(I18n.t("page_title.infrastructures"))
     expect(page).to have_content("test-app")
   end
