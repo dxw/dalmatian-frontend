@@ -1,20 +1,33 @@
-# Using this template
+# Dalmatian Frontend
 
-1. Search for `TODO` across the repository to customise the template to the new
-  project
-1. Be aware of [dxw RFCs](https://github.com/dxw/tech-team-rfcs), especially
-  those that have not resulted in a default code change in this repository:
-  - [rfc-013-use-docker-to-deploy-and-run-applications-in-containers](https://github.com/dxw/tech-team-rfcs/blob/master/rfc-013-use-docker-to-deploy-and-run-applications-in-containers.md)
+This service is intended to be used by developers and designers who need to view and change the way applications are hosted on Dalmatian.
 
-TODO: Remove this section from the README once complete
+Due to risks associated with the high level of access, this service is designed to be run locally instead of being hosted on the internet. It will use your machines AWS configuration.
 
----
+## Prerequisites [likely to be missing details]
 
-# Rails Template
-
-TODO: replace README header with project name
-
-TODO: Add a summary of who the application is for and what it will do.
+1. The ops team will need to add you as a Dalmatian Admin. This will include changing this file https://github.com/dxw/dalmatian-config/blob/master/dalmatian.yml#L15
+2. Sign into the AWS web console https://eu-west-2.console.aws.amazon.com. The credentials will look similar to:
+    ```
+    IAM User: dalmatian-<your name>-admin
+    Account: dalmatian-dxw
+    ```
+3. [Create yourself an access key here](https://console.aws.amazon.com/iam/home?region=eu-west-2#/security_credentials) and copy the values into your local ~/.aws/credentials file:
+  ```
+  # Dalmatian
+  [dalmatian]
+  aws_access_key_id =
+  aws_secret_access_key =
+  ```
+4. Copy the following configuration into your ~/.aws/config:
+    ```
+    [profile dalmatian]
+    role_arn = arn:aws:iam::511700466171:role/dalmatian-admin
+    source_profile = mfa
+    region=eu-west-2
+    cli_follow_urlparam=false
+    ```
+5. [Follow the guidance of Dalmatian Tools to set up an MFA code](https://github.com/dxw/dalmatian-tools/). This should add more information into ~/.aws/credentials and allow you to start using the AWS API
 
 ## Getting started
 
