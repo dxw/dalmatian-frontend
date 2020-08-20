@@ -1,0 +1,11 @@
+<h1 class="mt-5">
+  <%= I18n.t("page_title.infrastructures") %>
+</h1>
+
+<ul class="list-group">
+  <% @infrastructures.each do |infrastructure| %>
+    <li class="list-group-item">
+      <%= infrastructure %>
+    </li>
+  <% end %>
+</ul>
