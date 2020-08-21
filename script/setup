@@ -39,6 +39,9 @@ if [ -z "$CI" ] && [ -n "$DB_DROP_RESULT" ]; then
   esac
 fi
 
+echo "==> Starting Mongo database..."
+brew services start mongodb-community@4.4
+
 echo "==> Creating database..."
 bundle exec rails db:setup
 
