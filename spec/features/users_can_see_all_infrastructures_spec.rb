@@ -8,7 +8,21 @@ feature "Users can see all infrastructures" do
     expect(page).to have_content(I18n.t("page_title.infrastructures"))
     expect(page).to have_content("new-dedicated-cluster")
   end
+
+  scenario "a single infrastructure can be viewed" do
+    infrastructure = Infrastructure.create(identifier: "test-app", account_id: "345")
+
+    visit root_path
+
+    within("##{infrastructure.id}") do
+      click_on("View")
+    end
+
     expect(page).to have_content("test-app")
+
+    within("code") do
+      expect(page).to have_content(infrastructure.id)
+    end
   end
 
   def stub_creation_of_infrastructure_records

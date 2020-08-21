@@ -1,0 +1,9 @@
+<h1 class="mt-5">
+  <%= @infrastructure.identifier %>
+</h1>
+
+<pre>
+  <code>
+    <%= JSON.pretty_generate(@infrastructure.attributes) %>
+  </code>
+</pre>
