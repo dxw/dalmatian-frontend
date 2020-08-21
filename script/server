@@ -24,5 +24,8 @@ mkdir -p tmp
 rm -rf tmp/dalmatian-config
 git clone "$DALMATIAN_CONFIG_REPO" tmp/dalmatian-config
 
+echo "==> Populating the MongoDB with Dalmatian config..."
+bundle exec rake populate_database
+
 echo "==> Starting the development server..."
 bundle exec rails server

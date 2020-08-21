@@ -2,6 +2,7 @@
 
 class InfrastructuresController < ApplicationController
   def index
-    @infrastructures = FindDalmatianConfiguration.new.infrastructures
+    @infrastructures = Infrastructure.all
+  end
   end
 end
