@@ -25,6 +25,23 @@ feature "Users can see all infrastructures" do
     end
   end
 
+  scenario "can pick another infrastructure" do
+    infrastructure_1 = Infrastructure.create(identifier: "app-1")
+    infrastructure_2 = Infrastructure.create(identifier: "app-2")
+
+    visit infrastructures_path(infrastructure_1)
+
+    within("nav") do
+      click_on("Infrastructures")
+    end
+
+    within("##{infrastructure_2.id}") do
+      click_on("View")
+    end
+
+    expect(page).to have_content(infrastructure_2.identifier)
+  end
+
   def stub_creation_of_infrastructure_records
     config = YAML.safe_load(File.read("spec/fixtures/dalmatian-config/dalmatian.yml"))
     dalmatian_configuration_double = instance_double(FindDalmatianConfiguration)
