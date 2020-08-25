@@ -28,9 +28,9 @@ RUN gem install bundler
 RUN echo $RAILS_ENV
 RUN \
   if [ "$RAILS_ENV" = "production" ]; then \
-    bundle install --without development test --retry 10; \
+    bundle install --without development test --retry 10 --jobs 4; \
   else \
-    bundle install --retry 10; \
+    bundle install --retry 10 --jobs 4; \
   fi
 
 COPY . $INSTALL_PATH
