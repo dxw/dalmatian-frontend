@@ -10,17 +10,5 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-      - name: Set up Docker
-        run: docker network create test
-      - name: Set up MongoDB
-        run: docker run -d --name mongodb --network test -p 27017:27017 mongo -v /data/db:/data/db
-      - name: Build a new Docker image
-        run: docker build . --build-arg RAILS_ENV=test -t app:test
       - name: Run the tests
-        run: |
-          docker run --name test-container \
-            --network test \
-            -e RAILS_ENV=test \
-            -e DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL=true \
-            -e DATABASE_URL=mongodb://mongodb:27017/dalmatian-frontend-test \
-            app:test bundle exec rake
+        run: docker-compose -f docker-compose.test.yml run web script/test
