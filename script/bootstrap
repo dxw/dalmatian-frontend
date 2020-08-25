@@ -12,6 +12,8 @@ if [ -f .gitmodules ]; then
   git submodule update --init
 fi
 
+# Set up a native Darwin environment (no Docker)
+# If ENV["CI"] is not present defer to the Dockerfile
 if [ -z "$CI" ]; then
   if [ -f Brewfile ] && [ "$(uname -s)" = "Darwin" ]; then
     if ! brew bundle check >/dev/null 2>&1; then
@@ -39,25 +41,26 @@ if [ -z "$CI" ]; then
       nodenv rehash
     fi
   fi
-fi
 
-if ! command -v bundle >/dev/null 2>&1; then
-  echo "==> Installing Bundler..."
-  gem install bundler
+  if ! command -v bundle >/dev/null 2>&1; then
+    echo "==> Installing Bundler..."
+    gem install bundler
 
-  if [ -z "$CI" ]; then
-    rbenv rehash
+    if [ -z "$CI" ]; then
+      rbenv rehash
+    fi
   fi
-fi
 
-if ! bundle check >/dev/null 2>&1; then
-  echo "==> Installing Ruby dependencies..."
-  bundle install --path vendor/bundle
-fi
+  if ! bundle check >/dev/null 2>&1; then
+    echo "==> Installing Ruby dependencies..."
+    bundle config set path vendor/bundle
+    bundle install
+  fi
 
-if [ -f package.json ]; then
-  if ! yarn check --verify-tree >/dev/null 2>&1; then
-    echo "==> Installing JS dependencies..."
-    yarn install
+  if [ -f package.json ]; then
+    if ! yarn check --verify-tree >/dev/null 2>&1; then
+      echo "==> Installing JS dependencies..."
+      yarn install
+    fi
   fi
 fi
