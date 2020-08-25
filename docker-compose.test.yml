@@ -1,0 +1,33 @@
+version: '3.7'
+services:
+  web:
+    build:
+      context: .
+      args:
+        RAILS_ENV: test
+    image: thedxw/dalmatian-frontend
+    environment:
+      DATABASE_URL: 'mongodb://mongodb:27017/dalmatian-frontend-test'
+      DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
+      CI: "true"
+    env_file:
+      - .env.test
+    networks:
+      - tests
+    depends_on:
+      - mongodb
+    command: /bin/sh -c "./script/test"
+  mongodb:
+    image: mongo:4.4
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+    networks:
+      - tests
+
+networks:
+  tests:
+
+volumes:
+  mongodb_data_container:

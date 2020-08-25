@@ -8,6 +8,3 @@ cd "$(dirname "$0")/.."
 
 echo "==> Bootstrapping..."
 script/bootstrap
-
-echo "==> Running database migrations..."
-bundle exec rails db:migrate

@@ -5,7 +5,8 @@ RUN apt-get update && apt-get install -qq -y \
   libpq-dev \
   --fix-missing --no-install-recommends
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
-        && apt-get install -y nodejs
+        && apt-get install -y nodejs shellcheck
+RUN npm install yarn -g
 
 ENV INSTALL_PATH /srv/app
 RUN mkdir -p $INSTALL_PATH
@@ -27,9 +28,9 @@ RUN gem install bundler
 RUN echo $RAILS_ENV
 RUN \
   if [ "$RAILS_ENV" = "production" ]; then \
-    bundle install --without development test --retry 10; \
+    bundle install --without development test --retry 10 --jobs 4; \
   else \
-    bundle install --retry 10; \
+    bundle install --retry 10 --jobs 4; \
   fi
 
 COPY . $INSTALL_PATH

@@ -4,8 +4,9 @@
 
 <ul class="list-group">
   <% @infrastructures.each do |infrastructure| %>
-    <li class="list-group-item">
-      <%= infrastructure %>
+    <li class="list-group-item" id=<%= infrastructure.id %>>
+      <%= infrastructure.identifier %>
+      <%= link_to "View", infrastructure_path(infrastructure), class: "btn btn-primary float-right", role: "button" %>
     </li>
   <% end %>
 </ul>
