@@ -10,5 +10,11 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
+      - uses: whoan/docker-build-with-cache-action@v5
+        with:
+          username: "${{ secrets.DOCKER_HUB_USERNAME }}"
+          password: "${{ secrets.DOCKER_HUB_PASSWORD }}"
+          image_name: thedxw/dalmatian-frontend
+          build_extra_args: "--build-arg=RAILS_ENV=test"
       - name: Run the tests
         run: docker-compose -f docker-compose.test.yml run web script/test
