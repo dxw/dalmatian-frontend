@@ -7,4 +7,10 @@ class Infrastructure
   rescue NoMethodError
     []
   end
+
+  def environments
+    super
+  rescue NoMethodError
+    {}
+  end
 end

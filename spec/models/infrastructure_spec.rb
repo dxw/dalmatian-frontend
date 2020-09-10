@@ -14,4 +14,18 @@ RSpec.describe Infrastructure, type: :model do
       end
     end
   end
+
+  describe "#environments" do
+    it "returns an hash of environments" do
+      result = described_class.new(environments: {"staging" => []}).environments
+      expect(result).to eql({"staging" => []})
+    end
+
+    context "when this infrastructure has environments" do
+      it "returns an empty array" do
+        result = described_class.new.environments
+        expect(result).to eql({})
+      end
+    end
+  end
 end
