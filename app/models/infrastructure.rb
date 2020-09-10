@@ -13,4 +13,8 @@ class Infrastructure
   rescue NoMethodError
     {}
   end
+
+  def service_names
+    services.map { |service| service["name"] }
+  end
 end
