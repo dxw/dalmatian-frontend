@@ -17,4 +17,8 @@ class Infrastructure
   def service_names
     services.map { |service| service["name"] }
   end
+
+  def environment_names
+    environments.keys
+  end
 end

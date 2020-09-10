@@ -41,4 +41,17 @@ RSpec.describe Infrastructure, type: :model do
       expect(result).to eql(["service-1", "service-2"])
     end
   end
+
+  describe "#environment_names" do
+    it "returns an array of all the environment names" do
+      result = described_class.new(
+        environments: {
+          "environment-1" => [],
+          "environment-2" => []
+        }
+      ).environment_names
+
+      expect(result).to eql(["environment-1", "environment-2"])
+    end
+  end
 end
