@@ -16,10 +16,10 @@ require "sprockets/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-Mongo::Logger.logger.level = Logger::WARN
-
 module DalmatianFrontend
   class Application < Rails::Application
+    config.mongoid.logger.level = Logger::WARN
+
     config.generators do |g|
       g.test_framework :rspec,
         fixtures: true,

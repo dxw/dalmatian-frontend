@@ -27,5 +27,10 @@ git clone "$DALMATIAN_CONFIG_REPO" tmp/dalmatian-config
 echo "==> Populating the MongoDB with Dalmatian config..."
 bundle exec rake populate_database
 
+if grep -Fq "profile dalmatian" ~/.aws/config; then
+  echo "==> Setting Dalmatian AWS profile..."
+  export AWS_PROFILE=dalmatian
+fi
+
 echo "==> Starting the development server..."
 bundle exec rails server
