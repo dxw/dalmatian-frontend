@@ -3,3 +3,7 @@ en:
     name: "Dalmatian Frontend"
   page_title:
     infrastructures: "Infrastructures"
+    environment_variable:
+      new: "Create or update variable"
+  button:
+    add_or_update_variable: "Create or update variable"
