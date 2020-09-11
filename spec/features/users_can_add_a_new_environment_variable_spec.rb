@@ -64,4 +64,25 @@ feature "Users can add new environment variables" do
     expect(page).to have_content("FOO")
     expect(page).to have_content("BAAZ")
   end
+
+  scenario "validates the presence of both values" do
+    infrastructure = Infrastructure.create(
+      identifier: "test-app",
+      account_id: "345",
+      services: [{"name" => "test-service"}],
+      environments: {"staging" => []}
+    )
+
+    # Deliberately omit query params for service_name and environment_name
+    visit new_infrastructure_environment_variable_path(infrastructure)
+
+    fill_in "environment_variable[name]", with: "" # Deliberately omit a value
+    fill_in "environment_variable[value]", with: "" # Deliberately omit a value
+    click_on I18n.t("button.add_or_update_variable")
+
+    expect(page).to have_content("Service name can't be blank")
+    expect(page).to have_content("Environment name can't be blank")
+    expect(page).to have_content("Name can't be blank")
+    expect(page).to have_content("Value can't be blank")
+  end
 end
