@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - individual infrastructures can be viewed
 - fetch and display environment variables for each service from AWS ParameterStore
 - users can add a new environment variable
+- users can update an existing environment variable
 
 [unreleased]: TODO
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/
