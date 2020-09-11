@@ -59,4 +59,5 @@ end
 group :test do
   gem "database_cleaner"
   gem "launchy"
+  gem "coveralls", require: false
 end
