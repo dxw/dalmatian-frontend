@@ -33,4 +33,9 @@ else
 
   echo "==> Running the tests..."
   bundle exec rspec
+
+  if [ -n "$CI" ]; then
+    echo "==> Running brakeman..."
+    bundle exec brakeman
+  fi
 fi
