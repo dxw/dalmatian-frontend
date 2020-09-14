@@ -1,4 +1,18 @@
 module AwsApiHelpers
+  def create_aws_environment_variable(name:, value:)
+    Aws::SSM::Types::Parameter.new(
+      name: name,
+      type: "SecureString",
+      value: value,
+      version: 19,
+      selector: nil,
+      source_result: nil,
+      last_modified_date: Time.new("2020-04-22 14:15:43 +0100"),
+      arn: "arn:aws:ssm:eu-west-2:345:parameter/test-app/test-service/staging/FOO",
+      data_type: "text"
+    )
+  end
+
   def stub_call_to_aws_for_environment_variables(
     account_id:,
     aws_ssm_client_double: nil,
