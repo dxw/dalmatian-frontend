@@ -11,7 +11,7 @@ class EnvironmentVariablesController < ApplicationController
 
     @environment_variable = EnvironmentVariable.new(environment_variable_params)
 
-    if @environment_variable.valid? && safe_service_name? && safe_environment_name?
+    if @environment_variable.valid?
       CreateEnvironmentVariable.new(infrastructure: @infrastructure)
         .call(environment_variable: @environment_variable)
       redirect_to infrastructure_path(@infrastructure)
@@ -42,15 +42,5 @@ class EnvironmentVariablesController < ApplicationController
 
   def value
     environment_variable_params[:value]
-  end
-
-  def safe_environment_name?
-    raise ArgumentError unless @infrastructure.environment_names.include?(environment_variable_params[:environment_name])
-    true
-  end
-
-  def safe_service_name?
-    raise ArgumentError unless @infrastructure.service_names.include?(environment_variable_params[:service_name])
-    true
   end
 end
