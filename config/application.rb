@@ -18,6 +18,8 @@ Bundler.require(*Rails.groups)
 
 module DalmatianFrontend
   class Application < Rails::Application
+    config.autoload_paths += %W[#{config.root}/lib]
+
     config.mongoid.logger.level = Logger::WARN
 
     config.generators do |g|

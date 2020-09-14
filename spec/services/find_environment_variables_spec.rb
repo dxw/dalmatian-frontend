@@ -72,31 +72,31 @@ RSpec.describe FindEnvironmentVariables do
           parameters: [fake_environment_variable]
         )
 
-        aws_client_double = instance_double(Aws::SSM::Client)
+        aws_ssm_client = stub_aws_ssm_client(account_id: infrastructure.account_id)
         stub_call_to_aws_for_environment_variables(
           account_id: infrastructure.account_id,
-          aws_client_double: aws_client_double,
+          aws_ssm_client_double: aws_ssm_client,
           request_path: "/test/first-service/staging/",
           environment_variables: fake_environment_variables
         )
 
         stub_call_to_aws_for_environment_variables(
           account_id: infrastructure.account_id,
-          aws_client_double: aws_client_double,
+          aws_ssm_client_double: aws_ssm_client,
           request_path: "/test/first-service/production/",
           environment_variables: fake_environment_variables
         )
 
         stub_call_to_aws_for_environment_variables(
           account_id: infrastructure.account_id,
-          aws_client_double: aws_client_double,
+          aws_ssm_client_double: aws_ssm_client,
           request_path: "/test/second-service/staging/",
           environment_variables: fake_environment_variables
         )
 
         stub_call_to_aws_for_environment_variables(
           account_id: infrastructure.account_id,
-          aws_client_double: aws_client_double,
+          aws_ssm_client_double: aws_ssm_client,
           request_path: "/test/second-service/production/",
           environment_variables: fake_environment_variables
         )
