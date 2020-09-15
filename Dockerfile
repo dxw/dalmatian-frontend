@@ -3,6 +3,7 @@ MAINTAINER dxw <rails@dxw.com>
 RUN apt-get update && apt-get install -qq -y \
   build-essential \
   libpq-dev \
+  iceweasel \
   --fix-missing --no-install-recommends
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
         && apt-get install -y nodejs shellcheck
