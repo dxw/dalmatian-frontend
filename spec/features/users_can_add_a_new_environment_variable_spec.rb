@@ -34,18 +34,7 @@ feature "Users can add new environment variables" do
       variable_value: "BAAZ"
     )
 
-    updated_environment_variable = Aws::SSM::Types::Parameter.new(
-      name: "FOO",
-      type: "SecureString",
-      value: "BAAZ",
-      version: 19,
-      selector: nil,
-      source_result: nil,
-      last_modified_date: Time.new("2020-04-22 14:15:43 +0100"),
-      arn: "arn:aws:ssm:eu-west-2:345:parameter/test-app/test-service/staging/FOO",
-      data_type: "text"
-    )
-
+    updated_environment_variable = create_aws_environment_variable(name: "FOO", value: "BAAZ")
     updated_environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(
       parameters: [updated_environment_variable]
     )
@@ -75,18 +64,7 @@ feature "Users can add new environment variables" do
 
     aws_ssm_client = stub_aws_ssm_client(account_id: infrastructure.account_id)
 
-    existing_environment_variable = Aws::SSM::Types::Parameter.new(
-      name: "EXISTING_VARIABLE_NAME",
-      type: "SecureString",
-      value: "EXISTING_VARIABLE_VALUE",
-      version: 19,
-      selector: nil,
-      source_result: nil,
-      last_modified_date: Time.new("2020-04-22 14:15:43 +0100"),
-      arn: "arn:aws:ssm:eu-west-2:345:parameter/test-app/test-service/staging/FOO",
-      data_type: "text"
-    )
-
+    existing_environment_variable = create_aws_environment_variable(name: "EXISTING_VARIABLE_NAME", value: "EXISTING_VARIABLE_VALUE")
     existing_environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(
       parameters: [existing_environment_variable]
     )
@@ -119,18 +97,7 @@ feature "Users can add new environment variables" do
       variable_value: "NEW_VALUE"
     )
 
-    updated_environment_variable = Aws::SSM::Types::Parameter.new(
-      name: "EXISTING_VARIABLE_NAME",
-      type: "SecureString",
-      value: "NEW_VALUE",
-      version: 19,
-      selector: nil,
-      source_result: nil,
-      last_modified_date: Time.new("2020-04-22 14:15:43 +0100"),
-      arn: "arn:aws:ssm:eu-west-2:345:parameter/test-app/test-service/staging/FOO",
-      data_type: "text"
-    )
-
+    updated_environment_variable = create_aws_environment_variable(name: "EXISTING_VARIABLE_NAME", value: "NEW_VALUE")
     updated_environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(
       parameters: [updated_environment_variable]
     )

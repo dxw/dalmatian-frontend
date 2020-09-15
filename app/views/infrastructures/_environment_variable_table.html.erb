@@ -1,6 +1,7 @@
 <table class="table table-dark table-striped table-bordered table-hover">
   <thead>
     <tr>
+      <th scope="col"></th>
       <th scope="col">Name</th>
       <th scope="col">Value</th>
       <th scope="col">Last modified</th>
@@ -11,6 +12,14 @@
   <tbody>
     <% environment_variables.each do |variable| %>
       <tr>
+        <td>
+          <%= form_tag(infrastructure_environment_variable_path(@infrastructure, id: variable.name), method: :delete) do %>
+            <%= hidden_field_tag 'environment_variable[name]', variable.name %>
+            <%= hidden_field_tag 'environment_variable[service_name]', service_name %>
+            <%= hidden_field_tag 'environment_variable[environment_name]', environment_name %>
+            <%= submit_tag "Delete", class: "btn btn-danger", "data-confirm" => "Are you sure you want to remove '#{variable.name}' for '#{service_name}' in the '#{environment_name}' environment?" %>
+          <% end %>
+        </td>
         <td><%= variable.name %></td>
         <td><%= variable.value %></td>
         <td><%= variable.last_modified_date %></td>

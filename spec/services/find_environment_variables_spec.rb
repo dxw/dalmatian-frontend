@@ -10,18 +10,7 @@ RSpec.describe FindEnvironmentVariables do
         environments: {"staging" => []}
       )
 
-      fake_environment_variable = Aws::SSM::Types::Parameter.new(
-        name: "FOO",
-        type: "SecureString",
-        value: "BAR",
-        version: 19,
-        selector: nil,
-        source_result: nil,
-        last_modified_date: Time.new("2020-04-22 14:15:43 +0100"),
-        arn: "arn:aws:ssm:eu-west-2:345:parameter/test-app/test-service/staging/FOO",
-        data_type: "text"
-      )
-
+      fake_environment_variable = create_aws_environment_variable(name: "FOO", value: "BAR")
       fake_environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(
         parameters: [fake_environment_variable]
       )
@@ -56,18 +45,7 @@ RSpec.describe FindEnvironmentVariables do
           }
         )
 
-        fake_environment_variable = Aws::SSM::Types::Parameter.new(
-          name: "FOO",
-          type: "SecureString",
-          value: "BAR",
-          version: 19,
-          selector: nil,
-          source_result: nil,
-          last_modified_date: Time.new("2020-04-22 14:15:43 +0100"),
-          arn: "arn:aws:ssm:eu-west-2:345:parameter/test-app/test-service/staging/FOO",
-          data_type: "text"
-        )
-
+        fake_environment_variable = create_aws_environment_variable(name: "FOO", value: "BAR")
         fake_environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(
           parameters: [fake_environment_variable]
         )

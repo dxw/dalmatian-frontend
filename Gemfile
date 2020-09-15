@@ -33,6 +33,7 @@ end
 
 group :test do
   gem "capybara", ">= 2.15"
+  gem "geckodriver-helper"
   gem "selenium-webdriver"
 end
 

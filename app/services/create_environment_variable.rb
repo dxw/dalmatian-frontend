@@ -8,8 +8,7 @@ class CreateEnvironmentVariable
   end
 
   def call(environment_variable:)
-    path = "/#{infrastructure.identifier}/#{environment_variable.service_name}/#{environment_variable.environment_name}/"
-    name_with_path = "#{path}#{environment_variable.name}"
+    name_with_path = "/#{infrastructure.identifier}/#{environment_variable.full_aws_name}"
     key_id = "alias/#{infrastructure.identifier}-#{environment_variable.service_name}-#{environment_variable.environment_name}-ssm"
 
     aws_ssm_client.put_parameter(
