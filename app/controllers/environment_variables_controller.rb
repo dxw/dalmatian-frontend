@@ -20,6 +20,16 @@ class EnvironmentVariablesController < ApplicationController
     end
   end
 
+  def destroy
+    @infrastructure = Infrastructure.find(params[:infrastructure_id])
+
+    environment_variable = EnvironmentVariable.new(environment_variable_params)
+    result = DeleteEnvironmentVariable.new(infrastructure: @infrastructure).call(environment_variable: environment_variable)
+
+    flash_message = result.success? ? {notice: "#{environment_variable.name} has been successfully deleted"} : {error: result.error_message}
+    redirect_to infrastructure_path(@infrastructure), flash: flash_message
+  end
+
   def service_name
     params["service_name"]
   end

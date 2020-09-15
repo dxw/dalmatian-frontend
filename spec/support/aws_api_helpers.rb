@@ -27,7 +27,7 @@ module AwsApiHelpers
         path: request_path,
         with_decryption: true,
         recursive: false
-      ).and_return(environment_variables).once
+      ).and_return(environment_variables)
   end
 
   def stub_call_to_aws_to_update_environment_variables(
@@ -56,6 +56,21 @@ module AwsApiHelpers
         key_id: key_id,
         overwrite: true
       ).and_return(fake_result)
+  end
+
+  def stub_call_to_aws_to_delete_environment_variable(
+    aws_ssm_client_double: nil,
+    account_id:,
+    request_path:,
+    name:
+  )
+
+    aws_ssm_client = aws_ssm_client_double || stub_aws_ssm_client(account_id: account_id)
+
+    full_name = "#{request_path}/#{name}"
+    allow(aws_ssm_client)
+      .to receive(:delete_parameter)
+      .with(name: full_name)
   end
 
   def stub_aws_ssm_client(account_id:)

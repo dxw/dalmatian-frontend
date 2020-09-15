@@ -7,3 +7,4 @@ en:
       new: "Create or update variable"
   button:
     add_or_update_variable: "Create or update variable"
+    delete: "Delete"
