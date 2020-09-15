@@ -2,7 +2,7 @@
   "entries": {
     "tap": {
       "mongodb/brew": {
-        "revision": "0884e0f5b64834a8bd44dcd4df162aff3bbf80b9"
+        "revision": "1ec52e55b8d66cac398497d9643cf475df842e64"
       }
     },
     "brew": {
@@ -35,34 +35,13 @@
       "yarn": {
         "version": "1.22.5",
         "bottle": false
-      },
-      "geckodriver": {
-        "version": "0.27.0",
-        "bottle": {
-          "cellar": ":any_skip_relocation",
-          "prefix": "/usr/local",
-          "files": {
-            "catalina": {
-              "url": "https://homebrew.bintray.com/bottles/geckodriver-0.27.0.catalina.bottle.tar.gz",
-              "sha256": "bd5e9db1c72e65e9af516a5c8bc43c8896808b636b036b1467447418cb34a235"
-            },
-            "mojave": {
-              "url": "https://homebrew.bintray.com/bottles/geckodriver-0.27.0.mojave.bottle.tar.gz",
-              "sha256": "d4d308dede5f3762694b6da1d21426e470bc8973b8e0084e1a44272b9673204d"
-            },
-            "high_sierra": {
-              "url": "https://homebrew.bintray.com/bottles/geckodriver-0.27.0.high_sierra.bottle.tar.gz",
-              "sha256": "c1ccd105a99db9ad2cdbba28d2502ff3a215479e83248b419c44799c0ee68dec"
-            }
-          }
-        }
       }
     },
     "cask": {
-      "firefox": {
-        "version": "80.0.1",
+      "chromedriver": {
+        "version": "85.0.4183.87",
         "options": {
-          "full_name": "firefox"
+          "full_name": "chromedriver"
         }
       }
     }
@@ -72,7 +51,7 @@
       "catalina": {
         "HOMEBREW_VERSION": "2.5.1",
         "HOMEBREW_PREFIX": "/usr/local",
-        "Homebrew/homebrew-core": "740bb171e701991b80e449c6856874bf8e295bf2",
+        "Homebrew/homebrew-core": "17d690f7eca4e529f022b45b9ce9ba4effaa0009",
         "CLT": "1103.0.32.62",
         "Xcode": "11.5",
         "macOS": "10.15.6"
