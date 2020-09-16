@@ -59,5 +59,6 @@ end
 group :test do
   gem "database_cleaner"
   gem "launchy"
-  gem "coveralls", require: false
+  gem "simplecov", "~> 0.18"
+  gem "simplecov-lcov"
 end
