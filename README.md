@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/dxw/dalmatian-frontend/badge.svg?branch=main)](https://coveralls.io/github/dxw/dalmatian-frontend?branch=main)
+
 # Dalmatian Frontend
 
 This service is intended to be used by developers and designers who need to view and change the way applications are hosted on Dalmatian.
