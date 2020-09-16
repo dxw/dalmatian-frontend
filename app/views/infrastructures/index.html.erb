@@ -1,12 +1,14 @@
-<h1 class="mt-5">
-  <%= I18n.t("page_title.infrastructures") %>
-</h1>
+<div class="col-6 offset-3">
+  <h1 class="mt-5">
+    <%= I18n.t("page_title.infrastructures") %>
+  </h1>
 
-<ul class="list-group">
-  <% @infrastructures.each do |infrastructure| %>
-    <li class="list-group-item" id=<%= infrastructure.id %>>
-      <%= infrastructure.identifier %>
-      <%= link_to "View", infrastructure_path(infrastructure), class: "btn btn-primary float-right", role: "button" %>
-    </li>
-  <% end %>
-</ul>
+  <ul class="list-group">
+    <% @infrastructures.each do |infrastructure| %>
+      <li class="list-group-item" id=<%= infrastructure.id %>>
+        <%= infrastructure.identifier %>
+        <%= link_to "View", infrastructure_path(infrastructure), class: "btn btn-primary float-right", role: "button" %>
+      </li>
+    <% end %>
+  </ul>
+</div>
