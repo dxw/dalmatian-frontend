@@ -20,6 +20,8 @@ feature "Users can see environment variables" do
 
     visit infrastructure_path(infrastructure)
 
+    click_on(I18n.t("tab.environment_variables"))
+
     expect(page).to have_content("Environment variables")
     expect(page).to have_content("test-service")
     expect(page).to have_content("FOO")

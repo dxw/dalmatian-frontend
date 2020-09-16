@@ -1,0 +1,8 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <%= link_to I18n.t("tab.configuration"), infrastructure_path(@infrastructure), class: "nav-link #{active_link(path: infrastructure_path(@infrastructure))}" %>
+  </li>
+  <li class="nav-item">
+    <%= link_to I18n.t("tab.environment_variables"), infrastructure_environment_variables_path(@infrastructure), class: "nav-link #{active_link(path: infrastructure_environment_variables_path(@infrastructure))}" %>
+  </li>
+</ul>

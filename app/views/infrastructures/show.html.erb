@@ -1,16 +1,6 @@
-<h1 class="mt-5">
-  <%= @infrastructure.identifier %>
-</h1>
+<h1 class="mt-5"><%= @infrastructure.identifier %></h1>
 
-<h2 class="mt-5">Environment variables</h2>
-<% @environment_variables.keys.each do |service_name| %>
-  <% @environment_variables[service_name].each_pair do |environment_name, environment_variables| %>
-    <h3><%= "#{service_name}: #{environment_name}" %></h2>
-    <%= link_to "Create or update variable", new_infrastructure_environment_variable_path(@infrastructure, service_name: service_name, environment_name: environment_name), class: "btn btn-primary" %>
-
-    <%= render 'environment_variable_table', environment_variables: environment_variables, service_name: service_name, environment_name: environment_name %>
-  <% end %>
-<% end %>
+<%= render "shared/tabs", locals: { infrastructure: @infrastructure } %>
 
 <h2 class="mt-5">Dalmatian config</h2>
 <pre>

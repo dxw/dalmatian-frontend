@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - users can add a new environment variable
 - users can update an existing environment variable
 - users can delete existing environment variables
+- environment variables are displayed on their own tab
 
 [unreleased]: TODO
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/

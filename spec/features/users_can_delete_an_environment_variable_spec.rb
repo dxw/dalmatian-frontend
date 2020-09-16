@@ -31,6 +31,8 @@ feature "Users can delete environment variables" do
 
     visit infrastructure_path(infrastructure)
 
+    click_on(I18n.t("tab.environment_variables"))
+
     stub_call_to_aws_for_environment_variables(
       aws_ssm_client_double: aws_ssm_client,
       account_id: infrastructure.account_id,

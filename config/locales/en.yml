@@ -8,3 +8,6 @@ en:
   button:
     add_or_update_variable: "Create or update variable"
     delete: "Delete"
+  tab:
+    configuration: "Configuration"
+    environment_variables: "Environment variables"
