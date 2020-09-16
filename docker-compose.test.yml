@@ -17,6 +17,9 @@ services:
     depends_on:
       - mongodb
     command: /bin/sh -c "./script/test"
+    volumes:
+      - ./coverage:/srv/app/coverage
+
   mongodb:
     image: mongo:4.4
     ports:

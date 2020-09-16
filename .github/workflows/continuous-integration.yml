@@ -18,3 +18,8 @@ jobs:
           build_extra_args: "--build-arg=RAILS_ENV=test"
       - name: Run the tests
         run: docker-compose -f docker-compose.test.yml run web script/test
+      - name: Coveralls
+        uses: coverallsapp/github-action@v1.1.2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ./coverage/lcov/app.lcov
