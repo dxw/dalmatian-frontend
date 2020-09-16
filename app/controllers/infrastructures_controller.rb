@@ -7,6 +7,5 @@ class InfrastructuresController < ApplicationController
 
   def show
     @infrastructure = Infrastructure.find(params[:id])
-    @environment_variables = FindEnvironmentVariables.new(infrastructure: @infrastructure).call
   end
 end

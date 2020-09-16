@@ -17,7 +17,7 @@ feature "Users can add new environment variables" do
     )
 
     visit infrastructure_path(infrastructure)
-
+    click_on(I18n.t("tab.environment_variables"))
     click_on(I18n.t("button.add_or_update_variable"))
 
     within("h1") do
@@ -77,6 +77,7 @@ feature "Users can add new environment variables" do
     )
 
     visit infrastructure_path(infrastructure)
+    click_on(I18n.t("tab.environment_variables"))
 
     expect(page).to have_content("EXISTING_VARIABLE_NAME")
     expect(page).to have_content("EXISTING_VARIABLE_VALUE")
