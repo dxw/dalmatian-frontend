@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - users can delete existing environment variables
 - environment variables are displayed on their own tab
 - infrastructure list is not longer full width
+- users can see infrastructure variables as well as environment variables for a given infrastructure
 
 [unreleased]: TODO
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/
