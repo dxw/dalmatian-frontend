@@ -13,7 +13,7 @@
     <% environment_variables.each do |variable| %>
       <tr>
         <td>
-          <%= form_tag(infrastructure_environment_variable_path(@infrastructure, id: variable.name), method: :delete) do %>
+          <%= form_tag(infrastructure_environment_variable_path(infrastructure, id: variable.name), method: :delete) do %>
             <%= hidden_field_tag 'environment_variable[name]', variable.name %>
             <%= hidden_field_tag 'environment_variable[service_name]', service_name %>
             <%= hidden_field_tag 'environment_variable[environment_name]', environment_name %>
