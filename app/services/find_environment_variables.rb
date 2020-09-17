@@ -1,6 +1,4 @@
 class FindEnvironmentVariables
-  include AwsClientWrapper
-
   attr_writer :infrastructure
 
   def initialize(infrastructure:)
@@ -15,9 +13,8 @@ class FindEnvironmentVariables
       results[service_name] = {}
 
       infrastructure.environments.each do |environment_name, _blob|
-        results[service_name][environment_name] = fetch_environment_variables(
-          service_name: service_name, environment_name: environment_name
-        )
+        path = environment_variable_path(service_name: service_name, environment_name: environment_name)
+        results[service_name][environment_name] = GetAwsParameter.new(infrastructure: infrastructure, path: path).call
       end
     end
 
@@ -28,15 +25,7 @@ class FindEnvironmentVariables
 
   attr_reader :infrastructure
 
-  def fetch_environment_variables(service_name:, environment_name:)
-    path = "/#{infrastructure.identifier}/#{service_name}/#{environment_name}/"
-
-    parameters = aws_ssm_client.get_parameters_by_path(
-      path: path,
-      with_decryption: true,
-      recursive: false
-    ).parameters
-
-    parameters.each { |p| p.name = File.basename(p.name) }
+  def environment_variable_path(service_name:, environment_name:)
+    "/#{infrastructure.identifier}/#{service_name}/#{environment_name}/"
   end
 end
