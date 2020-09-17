@@ -12,8 +12,10 @@ class EnvironmentVariablesController < ApplicationController
     @environment_variable = EnvironmentVariable.new(environment_variable_params)
 
     if @environment_variable.valid?
-      CreateEnvironmentVariable.new(infrastructure: @infrastructure)
-        .call(environment_variable: @environment_variable)
+      CreateEnvironmentVariable.new(
+        infrastructure: @infrastructure,
+        environment_variable: @environment_variable
+      ).call
       redirect_to infrastructure_environment_variables_path(@infrastructure)
     else
       render :new
