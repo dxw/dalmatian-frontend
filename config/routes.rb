@@ -6,5 +6,6 @@ Rails.application.routes.draw do
 
   resources :infrastructures, only: [:show, :index] do
     resources :environment_variables, only: [:new, :create, :destroy, :index]
+    resources :infrastructure_variables, only: [:index], as: :variables
   end
 end

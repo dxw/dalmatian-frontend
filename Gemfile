@@ -25,23 +25,24 @@ gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "uglifier", ">= 1.3.0"
 
 group :development do
+  gem "better_errors"
   gem "listen", ">= 3.0.5", "< 3.3"
+  gem "html2haml"
+  gem "rails_layout"
   gem "spring"
+  gem "spring-commands-rspec"
   gem "spring-watcher-listen", "~> 2.0.0"
   gem "web-console", ">= 3.3.0"
 end
 
 group :test do
   gem "capybara", ">= 2.15"
+  gem "database_cleaner"
+  gem "launchy"
   gem "geckodriver-helper"
   gem "selenium-webdriver"
-end
-
-group :development do
-  gem "better_errors"
-  gem "html2haml"
-  gem "rails_layout"
-  gem "spring-commands-rspec"
+  gem "simplecov", "~> 0.18"
+  gem "simplecov-lcov"
 end
 
 group :development, :test do
@@ -54,11 +55,4 @@ group :development, :test do
   gem "pry"
   gem "rspec-rails"
   gem "standard"
-end
-
-group :test do
-  gem "database_cleaner"
-  gem "launchy"
-  gem "simplecov", "~> 0.18"
-  gem "simplecov-lcov"
 end

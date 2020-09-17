@@ -11,3 +11,4 @@ en:
   tab:
     configuration: "Configuration"
     environment_variables: "Environment variables"
+    infrastructure_variables: "Infrastructure variables"
