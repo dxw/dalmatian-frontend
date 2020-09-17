@@ -50,12 +50,4 @@ class EnvironmentVariablesController < ApplicationController
   def environment_variable_params
     params.require("environment_variable").permit(:name, :value, :service_name, :environment_name)
   end
-
-  def name
-    environment_variable_params[:name]
-  end
-
-  def value
-    environment_variable_params[:value]
-  end
 end
