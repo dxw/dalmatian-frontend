@@ -58,6 +58,33 @@ module AwsApiHelpers
       ).and_return(fake_result)
   end
 
+  def stub_call_to_aws_to_update_infrastructure_variables(
+    aws_ssm_client_double: nil,
+    account_id:,
+    infrastructure_identifier:,
+    environment_name:,
+    variable_name:,
+    variable_value:
+  )
+    aws_ssm_client = aws_ssm_client_double || stub_aws_ssm_client(account_id: account_id)
+
+    path = "/dalmatian-variables/infrastructures/#{infrastructure_identifier}/#{environment_name}/"
+    name_with_path = "#{path}#{variable_name}"
+    key_id = "alias/dalmatian"
+
+    fake_result = Aws::SSM::Types::PutParameterResult.new(version: 2, tier: "Standard")
+
+    allow(aws_ssm_client)
+      .to receive(:put_parameter)
+      .with(
+        name: name_with_path,
+        value: variable_value,
+        type: "SecureString",
+        key_id: key_id,
+        overwrite: true
+      ).and_return(fake_result)
+  end
+
   def stub_call_to_aws_to_delete_environment_variable(
     aws_ssm_client_double: nil,
     account_id:,

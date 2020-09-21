@@ -5,6 +5,8 @@ en:
     infrastructures: "Infrastructures"
     environment_variable:
       new: "Create or update variable"
+    infrastructure_variable:
+      new: "Create or update variable"
   button:
     add_or_update_variable: "Create or update variable"
     delete: "Delete"

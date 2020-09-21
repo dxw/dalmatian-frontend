@@ -4,5 +4,7 @@
 
 <% @infrastructure_variables.each_pair do |environment_name, infrastructure_variables| %>
   <h3><%= "#{environment_name}" %></h2>
+  <%= link_to I18n.t("button.add_or_update_variable"), new_infrastructure_variable_path(@infrastructure, environment_name: environment_name), class: "btn btn-primary" %>
+
   <%= render "environment_variable_table", infrastructure: @infrastructure, infrastructure_variables: infrastructure_variables, environment_name: environment_name %>
 <% end %>
