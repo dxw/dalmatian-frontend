@@ -1,12 +1,18 @@
-<h1 class="mt-5"><%= @infrastructure.identifier %></h1>
+<h1 class="mt-4 mb-4"><%= @infrastructure.identifier %></h1>
 
 <%= render "shared/tabs", locals: { infrastructure: @infrastructure } %>
 
-<% @environment_variables.keys.each do |service_name| %>
-  <% @environment_variables[service_name].each_pair do |environment_name, environment_variables| %>
-    <h3><%= "#{service_name}: #{environment_name}" %></h2>
-    <%= link_to I18n.t("button.add_or_update_variable"), new_infrastructure_environment_variable_path(@infrastructure, service_name: service_name, environment_name: environment_name), class: "btn btn-primary" %>
+<div class="col-12 col-md-12 pt-4">
+  <% @environment_variables.keys.each do |service_name| %>
+    <% @environment_variables[service_name].each_pair do |environment_name, environment_variables| %>
 
-    <%= render 'environment_variable_table', infrastructure: @infrastructure, environment_variables: environment_variables, service_name: service_name, environment_name: environment_name %>
+      <h3>
+        <%= service_name %>
+        <small class="text-muted"><%= environment_name %> environment</small>
+      </h3>
+      <%= link_to I18n.t("button.add_or_update_variable"), new_infrastructure_environment_variable_path(@infrastructure, service_name: service_name, environment_name: environment_name), class: "btn btn-primary mb-4" %>
+
+      <%= render 'environment_variable_table', infrastructure: @infrastructure, environment_variables: environment_variables, service_name: service_name, environment_name: environment_name %>
+    <% end %>
   <% end %>
-<% end %>
+</div>

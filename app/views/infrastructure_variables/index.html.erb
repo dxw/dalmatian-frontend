@@ -1,10 +1,15 @@
-<h1 class="mt-5"><%= @infrastructure.identifier %></h1>
+<h1 class="mt-4 mb-4"><%= @infrastructure.identifier %></h1>
 
 <%= render "shared/tabs", locals: { infrastructure: @infrastructure } %>
 
-<% @infrastructure_variables.each_pair do |environment_name, infrastructure_variables| %>
-  <h3><%= "#{environment_name}" %></h2>
-  <%= link_to I18n.t("button.add_or_update_variable"), new_infrastructure_variable_path(@infrastructure, environment_name: environment_name), class: "btn btn-primary" %>
+<div class="col-12 col-md-12 mt-4">
+  <% @infrastructure_variables.each_pair do |environment_name, infrastructure_variables| %>
+    <h3>
+      <%= environment_name %>
+      <small class="text-muted">environment</small>
+    </h3>
+    <%= link_to I18n.t("button.add_or_update_variable"), new_infrastructure_variable_path(@infrastructure, environment_name: environment_name), class: "btn btn-primary mb-4" %>
 
-  <%= render "environment_variable_table", infrastructure: @infrastructure, infrastructure_variables: infrastructure_variables, environment_name: environment_name %>
-<% end %>
+    <%= render "environment_variable_table", infrastructure: @infrastructure, infrastructure_variables: infrastructure_variables, environment_name: environment_name %>
+  <% end %>
+</div>
