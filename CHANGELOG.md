@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - users can see infrastructure variables as well as environment variables for a given infrastructure
 - users can create and update infrastructure variables
 - users can delete infrastructure variables
+- users are shown a warning about the effect of using any action within the service
 
 [unreleased]: TODO
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/

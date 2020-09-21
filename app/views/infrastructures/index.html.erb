@@ -1,6 +1,11 @@
 <div class="col-6 offset-3">
   <h1 class="mt-4 mb-4"><%= I18n.t("page_title.infrastructures") %></h1>
 
+  <div class="alert alert-warning" role="alert">
+    <p><%= I18n.t("alerts.introduction_warning.short") %></p>
+    <p><%= I18n.t("alerts.introduction_warning.long") %></p>
+  </div>
+
   <ul class="list-group">
     <% @infrastructures.each do |infrastructure| %>
       <li class="list-group-item" id=<%= infrastructure.id %>>

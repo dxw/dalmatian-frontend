@@ -41,4 +41,10 @@ feature "Users can see all infrastructures" do
 
     expect(page).to have_content(infrastructure_2.identifier)
   end
+
+  scenario "a warning is shown" do
+    visit infrastructures_path
+    expect(page).to have_content(I18n.t("alerts.introduction_warning.short"))
+    expect(page).to have_content(I18n.t("alerts.introduction_warning.long"))
+  end
 end
