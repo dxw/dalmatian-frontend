@@ -116,4 +116,24 @@ feature "Users can add new infrastructure variables" do
     expect(page).to have_content("NEW_VALUE")
     expect(page).to_not have_content("EXISTING_VARIABLE_VALUE")
   end
+
+  scenario "validates the presence of both values" do
+    infrastructure = Infrastructure.create(
+      identifier: "test-app",
+      account_id: "345",
+      services: [{"name" => "test-service"}],
+      environments: {"staging" => []}
+    )
+
+    # Deliberately omit query params for service_name and environment_name
+    visit new_infrastructure_variable_path(infrastructure)
+
+    fill_in "infrastructure_variable[name]", with: "" # Deliberately omit a value
+    fill_in "infrastructure_variable[value]", with: "" # Deliberately omit a value
+    click_on I18n.t("button.add_or_update_variable")
+
+    expect(page).to have_content("Environment name can't be blank")
+    expect(page).to have_content("Name can't be blank")
+    expect(page).to have_content("Value can't be blank")
+  end
 end

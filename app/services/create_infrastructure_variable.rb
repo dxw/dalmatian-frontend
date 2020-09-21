@@ -1,12 +1,11 @@
 class CreateInfrastructureVariable
   include AwsClientWrapper
 
-  attr_accessor :infrastructure, :infrastructure_variable, :environment_name
+  attr_accessor :infrastructure, :infrastructure_variable
 
-  def initialize(infrastructure:, infrastructure_variable:, environment_name:)
+  def initialize(infrastructure:, infrastructure_variable:)
     self.infrastructure = infrastructure
     self.infrastructure_variable = infrastructure_variable
-    self.environment_name = environment_name
   end
 
   def call
@@ -17,7 +16,7 @@ class CreateInfrastructureVariable
   private
 
   def name_with_path
-    "/dalmatian-variables/infrastructures/#{infrastructure.identifier}/#{environment_name}/#{infrastructure_variable.name}"
+    "/dalmatian-variables/infrastructures/#{infrastructure.identifier}/#{infrastructure_variable.environment_name}/#{infrastructure_variable.name}"
   end
 
   def key_id

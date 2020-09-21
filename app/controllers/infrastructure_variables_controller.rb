@@ -14,8 +14,7 @@ class InfrastructureVariablesController < ApplicationController
     if @infrastructure_variable.valid?
       CreateInfrastructureVariable.new(
         infrastructure: @infrastructure,
-        infrastructure_variable: @infrastructure_variable,
-        environment_name: environment_name
+        infrastructure_variable: @infrastructure_variable
       ).call
       redirect_to infrastructure_variables_path(@infrastructure)
     else
@@ -36,6 +35,6 @@ class InfrastructureVariablesController < ApplicationController
   private
 
   def infrastructure_variable_params
-    params.require("infrastructure_variable").permit(:name, :value)
+    params.require("infrastructure_variable").permit(:name, :value, :environment_name)
   end
 end
