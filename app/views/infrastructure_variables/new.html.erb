@@ -1,9 +1,10 @@
 <div class="col-4 offset-4">
-  <h1 class="mt-5"><%= I18n.t("page_title.environment_variable.new") %></h1>
+  <h1 class="mt-5">
+    <%= I18n.t("page_title.infrastructure_variable.new") %>
+  </h1>
 
   <p>If you provide an existing variable name this will update the existing value. It is case sensitive.</p>
-  <%= simple_form_for(@environment_variable, as: :environment_variable, method: :post, url: infrastructure_environment_variables_path(@infrastructure, service_name: service_name, environment_name: environment_name)) do |f| %>
-    <%= f.input :service_name, as: :hidden, :input_html => { :value => service_name } %>
+  <%= simple_form_for(@infrastructure_variable, as: :infrastructure_variable, method: :post, url: infrastructure_variables_path(@infrastructure, environment_name: environment_name)) do |f| %>
     <%= f.input :environment_name, as: :hidden, :input_html => { :value => environment_name } %>
     <%= f.input :name %>
     <%= f.input :value %>

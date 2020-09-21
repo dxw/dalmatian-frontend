@@ -4,7 +4,9 @@ en:
   page_title:
     infrastructures: "Infrastructures"
     environment_variable:
-      new: "Create or update variable"
+      new: "Create or update environment variable"
+    infrastructure_variable:
+      new: "Create or update infrastructure variable"
   button:
     add_or_update_variable: "Create or update variable"
     delete: "Delete"
