@@ -1,10 +1,12 @@
-<h1 class="mt-5"><%= @infrastructure.identifier %></h1>
+<h1 class="mt-4 mb-4"><%= @infrastructure.identifier %></h1>
 
 <%= render "shared/tabs", locals: { infrastructure: @infrastructure } %>
 
-<h2 class="mt-5">Dalmatian config</h2>
-<pre>
-  <code>
-    <%= JSON.pretty_generate(@infrastructure.attributes) %>
-  </code>
-</pre>
+<div class="col-12 col-md-12 mt-4">
+  <h2 class="mt-4">Dalmatian config</h2>
+  <pre>
+    <code>
+      <%= JSON.pretty_generate(@infrastructure.attributes) %>
+    </code>
+  </pre>
+</div>
