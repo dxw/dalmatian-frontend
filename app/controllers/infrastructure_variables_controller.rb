@@ -22,6 +22,16 @@ class InfrastructureVariablesController < ApplicationController
     end
   end
 
+  def destroy
+    @infrastructure = Infrastructure.find(params[:infrastructure_id])
+
+    infrastructure_variable = InfrastructureVariable.new(infrastructure_variable_params)
+    result = DeleteInfrastructureVariable.new(infrastructure: @infrastructure).call(infrastructure_variable: infrastructure_variable)
+
+    flash_message = result.success? ? {notice: "#{infrastructure_variable.name} has been successfully deleted"} : {error: result.error_message}
+    redirect_to infrastructure_variables_path(@infrastructure), flash: flash_message
+  end
+
   def index
     @infrastructure = Infrastructure.find(params[:infrastructure_id])
     @infrastructure_variables = FindInfrastructureVariables.new(infrastructure: @infrastructure).call
