@@ -1,8 +1,8 @@
-feature "Users can delete environment variables" do
+feature "Users can delete infrastructure variables" do
   let(:infrastructure) do
     Infrastructure.create(
       identifier: "test-app",
-      account_id: "345",
+      account_id: "9923123",
       services: [{"name" => "test-service"}],
       environments: {"staging" => []}
     )
@@ -18,23 +18,23 @@ feature "Users can delete environment variables" do
     stub_call_to_aws_for_environment_variables(
       aws_ssm_client_double: aws_ssm_client,
       account_id: infrastructure.account_id,
-      request_path: "/test-app/test-service/staging/",
+      request_path: "/dalmatian-variables/infrastructures/test-app/staging/",
       environment_variables: existing_environment_variables
     )
 
     stub_call_to_aws_to_delete_environment_variable(
       aws_ssm_client_double: aws_ssm_client,
       account_id: infrastructure.account_id,
-      request_path: "test-app/test-service/staging",
+      request_path: "/dalmatian-variables/infrastructures/test-app/staging",
       name: "EXISTING_VARIABLE_NAME"
     )
 
-    visit infrastructure_environment_variables_path(infrastructure)
+    visit infrastructure_variables_path(infrastructure)
 
     stub_call_to_aws_for_environment_variables(
       aws_ssm_client_double: aws_ssm_client,
       account_id: infrastructure.account_id,
-      request_path: "/test-app/test-service/staging/",
+      request_path: "/dalmatian-variables/infrastructures/test-app/staging/",
       environment_variables: Aws::SSM::Types::GetParametersByPathResult.new(parameters: [])
     )
 
