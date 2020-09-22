@@ -37,6 +37,7 @@ end
 
 group :test do
   gem "capybara", ">= 2.15"
+  gem "climate_control"
   gem "database_cleaner"
   gem "launchy"
   gem "geckodriver-helper"
