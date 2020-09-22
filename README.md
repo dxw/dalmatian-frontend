@@ -8,7 +8,7 @@ Due to risks associated with the high level of access, this service is designed 
 
 ## Prerequisites
 
-Once a member of the ops team has created you an AWS user on Dalmatian you should be able to [follow these instructions to set your machine up with AWS permissions](https://github.com/dxw/dalmatian-developer-docs/blob/master/setting-up-aws-credentials-on-your-local-environment.md).
+Once a member of the ops team has created you an AWS user on Dalmatian you should be able to [follow these instructions to set your machine up with AWS permissions](https://github.com/dxw/dalmatian-developer-docs/blob/master/setting-up-aws-credentials-on-your-local-environment.md). Ensure you have a local `AWS_PROFILE` named `dalmatian-admin`.
 
 Every 12 hours you will need to [renew your local MFA token by following these instructions](https://github.com/dxw/dalmatian-tools) before starting the server.
 

@@ -10,7 +10,8 @@ cd "$(dirname "$0")/.."
 echo "==> Updating..."
 script/update
 
-AWS_PROFILE=${AWS_PROFILE:-dalmatian}
+AWS_PROFILE=${AWS_PROFILE:-dalmatian-admin}
+export AWS_PROFILE
 
 echo "==> Finding Dalmatian config..."
 CI_PIPELINE=$(aws codepipeline get-pipeline --name ci-terraform-build-pipeline --profile "$AWS_PROFILE")
@@ -26,11 +27,6 @@ git clone "$DALMATIAN_CONFIG_REPO" tmp/dalmatian-config
 
 echo "==> Populating the MongoDB with Dalmatian config..."
 bundle exec rake populate_database
-
-if grep -Fq "profile dalmatian" ~/.aws/config; then
-  echo "==> Setting Dalmatian AWS profile..."
-  export AWS_PROFILE=dalmatian
-fi
 
 echo "==> Starting the development server..."
 bundle exec rails server
