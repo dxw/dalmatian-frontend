@@ -18,3 +18,4 @@ en:
     introduction_warning:
       short: "Use with caution."
       long: "This tool authenticates with your machines real AWS credentials. Despite being run locally, any action performed here will make real requests to AWS which may affect live services."
+  obfuscation: "************************************"

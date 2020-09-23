@@ -21,7 +21,9 @@
           <% end %>
         </td>
         <td class="text-break"><%= variable.name %></td>
-        <td class="text-break"><%= variable.value %></p></td>
+        <td class="secret-cell text-break" data-secret=<%= "#{variable.value}"%>>
+          <%= present_sensitive_value(variable.value) %>
+        </td>
         <td><%= variable.last_modified_date %></td>
         <td><%= variable.version %></td>
         <td><%= variable.data_type %></td>

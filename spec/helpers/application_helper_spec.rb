@@ -22,4 +22,32 @@ RSpec.describe ApplicationHelper, type: :helper do
       end
     end
   end
+
+  describe "#present_sensitive_value" do
+    context "when the app is configured to HIDE secrets" do
+      around do |example|
+        ClimateControl.modify HIDE_SECRETS_BY_DEFAULT: "true" do
+          example.run
+        end
+      end
+
+      it "obfuscates the value by replacing it with *" do
+        result = helper.present_sensitive_value("secret")
+        expect(result).to eql I18n.t("obfuscation")
+      end
+    end
+
+    context "when the app is configured to SHOW secrets" do
+      around do |example|
+        ClimateControl.modify HIDE_SECRETS_BY_DEFAULT: "false" do
+          example.run
+        end
+      end
+
+      it "obfuscates the value by replacing it with *" do
+        result = helper.present_sensitive_value("secret")
+        expect(result).to eql("secret")
+      end
+    end
+  end
 end
