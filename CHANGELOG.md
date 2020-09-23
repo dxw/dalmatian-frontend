@@ -18,6 +18,8 @@ The format is based on [Keep a Changelog 1.0.0].
 - users can create and update infrastructure variables
 - users can delete infrastructure variables
 - users are shown a warning about the effect of using any action within the service
+- secret environment variables are hidden by default
+- secret environment variables can be shown and hidden individually by clicking the cell
 
 [unreleased]: TODO
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/

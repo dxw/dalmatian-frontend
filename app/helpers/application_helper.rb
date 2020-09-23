@@ -7,7 +7,7 @@ module ApplicationHelper
 
   def present_sensitive_value(value)
     if ENV["HIDE_SECRETS_BY_DEFAULT"] == "true"
-      "************************************"
+      I18n.t("obfuscation")
     else
       value
     end

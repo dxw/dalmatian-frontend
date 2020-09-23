@@ -33,7 +33,7 @@ RSpec.describe ApplicationHelper, type: :helper do
 
       it "obfuscates the value by replacing it with *" do
         result = helper.present_sensitive_value("secret")
-        expect(result).to eql("************************************")
+        expect(result).to eql I18n.t("obfuscation")
       end
     end
 
