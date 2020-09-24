@@ -11,7 +11,7 @@ feature "Users can see infrastructure variables" do
       fake_environment_variable
     ])
 
-    stub_call_to_aws_for_environment_variables(
+    stub_call_to_aws_for_infrastructure_variables(
       account_id: infrastructure.account_id,
       request_path: "/dalmatian-variables/infrastructures/test-app/staging/",
       environment_variables: fake_environment_variables

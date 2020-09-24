@@ -30,6 +30,23 @@ module AwsApiHelpers
       ).and_return(environment_variables)
   end
 
+  def stub_call_to_aws_for_infrastructure_variables(
+    account_id:,
+    aws_ssm_client_double: nil,
+    request_path:,
+    environment_variables:
+  )
+    aws_ssm_client = aws_ssm_client_double || stub_aws_ssm_client(account_id: account_id)
+
+    allow(aws_ssm_client)
+      .to receive(:get_parameters_by_path)
+      .with(
+        path: request_path,
+        with_decryption: true,
+        recursive: false
+      ).and_return(environment_variables)
+  end
+
   def stub_call_to_aws_to_update_environment_variables(
     aws_ssm_client_double: nil,
     account_id:,
