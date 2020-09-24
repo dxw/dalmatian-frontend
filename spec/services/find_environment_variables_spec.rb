@@ -54,7 +54,7 @@ RSpec.describe FindEnvironmentVariables do
 
         aws_ssm_client = stub_aws_ssm_client(account_id: infrastructure.account_id)
         stub_call_to_aws_for_environment_variables(
-          aws_ssm_client_double: aws_ssm_client,
+          aws_ssm_client: aws_ssm_client,
           account_id: infrastructure.account_id,
           infrastructure_name: infrastructure.identifier,
           service_name: "first-service",
@@ -63,7 +63,7 @@ RSpec.describe FindEnvironmentVariables do
         )
 
         stub_call_to_aws_for_environment_variables(
-          aws_ssm_client_double: aws_ssm_client,
+          aws_ssm_client: aws_ssm_client,
           account_id: infrastructure.account_id,
           infrastructure_name: infrastructure.identifier,
           service_name: "first-service",
@@ -72,7 +72,7 @@ RSpec.describe FindEnvironmentVariables do
         )
 
         stub_call_to_aws_for_environment_variables(
-          aws_ssm_client_double: aws_ssm_client,
+          aws_ssm_client: aws_ssm_client,
           account_id: infrastructure.account_id,
           infrastructure_name: infrastructure.identifier,
           service_name: "second-service",
@@ -81,7 +81,7 @@ RSpec.describe FindEnvironmentVariables do
         )
 
         stub_call_to_aws_for_environment_variables(
-          aws_ssm_client_double: aws_ssm_client,
+          aws_ssm_client: aws_ssm_client,
           account_id: infrastructure.account_id,
           infrastructure_name: infrastructure.identifier,
           service_name: "second-service",

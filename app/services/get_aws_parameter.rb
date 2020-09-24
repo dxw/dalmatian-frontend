@@ -1,10 +1,8 @@
 class GetAwsParameter
-  include AwsClientWrapper
+  attr_accessor :aws_ssm_client, :path
 
-  attr_accessor :infrastructure, :path
-
-  def initialize(infrastructure:, path:)
-    self.infrastructure = infrastructure
+  def initialize(aws_ssm_client:, path:)
+    self.aws_ssm_client = aws_ssm_client
     self.path = path
   end
 

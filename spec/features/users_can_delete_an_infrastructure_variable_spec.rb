@@ -7,7 +7,7 @@ feature "Users can delete infrastructure variables" do
       environments: {"staging" => []}
     )
   end
-  let(:aws_ssm_client) { stub_aws_ssm_client(account_id: infrastructure.account_id) }
+  let(:aws_ssm_client) { stub_aws_ssm_client(aws_sts_client: stub_main_aws_sts_client, account_id: AwsApiHelpers::CORE_AWS_ACCOUNT_ID) }
 
   scenario "delete a single variable", js: true do
     existing_environment_variable = create_aws_environment_variable(name: "EXISTING_VARIABLE_NAME", value: "EXISTING_VARIABLE_VALUE")
@@ -16,15 +16,14 @@ feature "Users can delete infrastructure variables" do
     )
 
     stub_call_to_aws_for_infrastructure_variables(
-      aws_ssm_client_double: aws_ssm_client,
-      account_id: infrastructure.account_id,
+      aws_ssm_client: aws_ssm_client,
       service_name: "test-app",
       environment_name: "staging",
       environment_variables: existing_environment_variables
     )
 
     stub_call_to_aws_to_delete_infrastructure_variable(
-      aws_ssm_client_double: aws_ssm_client,
+      aws_ssm_client: aws_ssm_client,
       account_id: infrastructure.account_id,
       service_name: "test-app",
       environment_name: "staging",
@@ -34,8 +33,7 @@ feature "Users can delete infrastructure variables" do
     visit infrastructure_variables_path(infrastructure)
 
     stub_call_to_aws_for_infrastructure_variables(
-      aws_ssm_client_double: aws_ssm_client,
-      account_id: infrastructure.account_id,
+      aws_ssm_client: aws_ssm_client,
       service_name: "test-app",
       environment_name: "staging",
       environment_variables: Aws::SSM::Types::GetParametersByPathResult.new(parameters: [])

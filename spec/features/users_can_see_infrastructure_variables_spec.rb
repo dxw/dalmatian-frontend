@@ -12,7 +12,6 @@ feature "Users can see infrastructure variables" do
     ])
 
     stub_call_to_aws_for_infrastructure_variables(
-      account_id: infrastructure.account_id,
       service_name: "test-app",
       environment_name: "staging",
       environment_variables: fake_environment_variables

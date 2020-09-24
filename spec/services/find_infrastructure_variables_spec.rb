@@ -2,6 +2,13 @@ require "rails_helper"
 
 RSpec.describe FindInfrastructureVariables do
   describe "#call" do
+    let(:aws_ssm_client) do
+      stub_aws_ssm_client(
+        aws_sts_client: stub_main_aws_sts_client,
+        account_id: AwsApiHelpers::CORE_AWS_ACCOUNT_ID
+      )
+    end
+
     it "returns a hash of infrastructure variables grouped by environment" do
       infrastructure = Infrastructure.new(
         identifier: "test",
@@ -15,7 +22,6 @@ RSpec.describe FindInfrastructureVariables do
       )
 
       stub_call_to_aws_for_infrastructure_variables(
-        account_id: infrastructure.account_id,
         service_name: "test",
         environment_name: "staging",
         environment_variables: fake_environment_variables
@@ -44,18 +50,15 @@ RSpec.describe FindInfrastructureVariables do
           parameters: [fake_environment_variable]
         )
 
-        aws_ssm_client = stub_aws_ssm_client(account_id: infrastructure.account_id)
         stub_call_to_aws_for_infrastructure_variables(
-          account_id: infrastructure.account_id,
-          aws_ssm_client_double: aws_ssm_client,
+          aws_ssm_client: aws_ssm_client,
           service_name: "test",
           environment_name: "staging",
           environment_variables: fake_environment_variables
         )
 
         stub_call_to_aws_for_infrastructure_variables(
-          account_id: infrastructure.account_id,
-          aws_ssm_client_double: aws_ssm_client,
+          aws_ssm_client: aws_ssm_client,
           service_name: "test",
           environment_name: "production",
           environment_variables: fake_environment_variables

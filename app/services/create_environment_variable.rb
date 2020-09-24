@@ -9,11 +9,15 @@ class CreateEnvironmentVariable
   end
 
   def call
-    PutAwsParameter.new(infrastructure: infrastructure)
+    PutAwsParameter.new(aws_ssm_client: aws_ssm_client, infrastructure: infrastructure)
       .call(path: name_with_path, key_id: key_id, value: environment_variable.value)
   end
 
   private
+
+  def aws_ssm_client
+    ClientForInfrastructureAwsAccount.new(infrastructure: infrastructure).call
+  end
 
   def name_with_path
     "/#{infrastructure.identifier}/#{environment_variable.full_aws_name}"

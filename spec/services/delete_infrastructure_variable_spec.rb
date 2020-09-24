@@ -10,7 +10,12 @@ RSpec.describe DeleteInfrastructureVariable do
     )
   end
 
-  let(:aws_ssm_client) { stub_aws_ssm_client(account_id: infrastructure.account_id) }
+  let(:aws_ssm_client) do
+    stub_aws_ssm_client(
+      aws_sts_client: stub_main_aws_sts_client,
+      account_id: AwsApiHelpers::CORE_AWS_ACCOUNT_ID
+    )
+  end
 
   describe "#call" do
     it "sends a delete request to AWS" do

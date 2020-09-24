@@ -1,4 +1,6 @@
 class DeleteEnvironmentVariable
+  include AwsClientWrapper
+
   attr_accessor :infrastructure
 
   def initialize(infrastructure:)
@@ -8,7 +10,13 @@ class DeleteEnvironmentVariable
   def call(environment_variable:)
     full_name = "#{infrastructure.identifier}/#{environment_variable.full_aws_name}"
 
-    result = DeleteAwsParameter.new(infrastructure: infrastructure).call(path: full_name)
+    result = DeleteAwsParameter.new(aws_ssm_client: aws_ssm_client, infrastructure: infrastructure).call(path: full_name)
     result
+  end
+
+  private
+
+  def aws_ssm_client
+    ClientForInfrastructureAwsAccount.new(infrastructure: infrastructure).call
   end
 end
