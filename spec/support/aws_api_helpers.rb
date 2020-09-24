@@ -23,7 +23,7 @@ module AwsApiHelpers
     environment_name:,
     environment_variables:
   )
-    aws_ssm_client = aws_ssm_client || stub_aws_ssm_client(account_id: account_id)
+    aws_ssm_client ||= stub_aws_ssm_client(account_id: account_id)
     request_path = "/#{infrastructure_name}/#{service_name}/#{environment_name}/"
 
     allow(aws_ssm_client)
@@ -65,7 +65,7 @@ module AwsApiHelpers
     variable_name:,
     variable_value:
   )
-    aws_ssm_client = aws_ssm_client || stub_aws_ssm_client(account_id: account_id)
+    aws_ssm_client ||= stub_aws_ssm_client(account_id: account_id)
 
     path = "/#{infrastructure_identifier}/#{service_name}/#{environment_name}/"
     name_with_path = "#{path}#{variable_name}"
@@ -92,7 +92,7 @@ module AwsApiHelpers
     variable_name:,
     variable_value:
   )
-    aws_ssm_client = aws_ssm_client || stub_aws_ssm_client(account_id: account_id)
+    aws_ssm_client ||= stub_aws_ssm_client(account_id: account_id)
 
     path = "/dalmatian-variables/infrastructures/#{infrastructure_identifier}/#{environment_name}/"
     name_with_path = "#{path}#{variable_name}"
@@ -120,7 +120,7 @@ module AwsApiHelpers
     variable_name:
   )
 
-    aws_ssm_client = aws_ssm_client || stub_aws_ssm_client(account_id: account_id)
+    aws_ssm_client ||= stub_aws_ssm_client(account_id: account_id)
     full_name = "#{infrastructure_name}/#{service_name}/#{environment_name}/#{variable_name}"
 
     allow(aws_ssm_client)
@@ -136,7 +136,7 @@ module AwsApiHelpers
     variable_name:
   )
 
-    aws_ssm_client = aws_ssm_client || stub_aws_ssm_client(account_id: account_id)
+    aws_ssm_client ||= stub_aws_ssm_client(account_id: account_id)
     full_name = "/dalmatian-variables/infrastructures/#{service_name}/#{environment_name}/#{variable_name}"
 
     allow(aws_ssm_client)
