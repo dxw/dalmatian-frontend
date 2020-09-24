@@ -7,8 +7,9 @@ RSpec.describe DeleteAwsParameter do
 
       stub_call_to_aws_to_delete_infrastructure_variable(
         account_id: infrastructure.account_id,
-        request_path: "/dalmatian-variables/infrastructures/test-app/staging",
-        name: "EXISTING_VARIABLE_NAME"
+        service_name: "test-app",
+        environment_name: "staging",
+        variable_name: "EXISTING_VARIABLE_NAME"
       )
 
       expected_request_path = "/dalmatian-variables/infrastructures/test-app/staging/EXISTING_VARIABLE_NAME"

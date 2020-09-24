@@ -110,13 +110,15 @@ module AwsApiHelpers
   def stub_call_to_aws_to_delete_environment_variable(
     aws_ssm_client_double: nil,
     account_id:,
-    request_path:,
-    name:
+    infrastructure_name:,
+    service_name:,
+    environment_name:,
+    variable_name:
   )
 
     aws_ssm_client = aws_ssm_client_double || stub_aws_ssm_client(account_id: account_id)
+    full_name = "#{infrastructure_name}/#{service_name}/#{environment_name}/#{variable_name}"
 
-    full_name = "#{request_path}/#{name}"
     allow(aws_ssm_client)
       .to receive(:delete_parameter)
       .with(name: full_name)
@@ -125,13 +127,14 @@ module AwsApiHelpers
   def stub_call_to_aws_to_delete_infrastructure_variable(
     aws_ssm_client_double: nil,
     account_id:,
-    request_path:,
-    name:
+    service_name:,
+    environment_name:,
+    variable_name:
   )
 
     aws_ssm_client = aws_ssm_client_double || stub_aws_ssm_client(account_id: account_id)
+    full_name = "/dalmatian-variables/infrastructures/#{service_name}/#{environment_name}/#{variable_name}"
 
-    full_name = "#{request_path}/#{name}"
     allow(aws_ssm_client)
       .to receive(:delete_parameter)
       .with(name: full_name)

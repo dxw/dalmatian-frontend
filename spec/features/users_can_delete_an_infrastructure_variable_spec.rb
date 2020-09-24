@@ -26,8 +26,9 @@ feature "Users can delete infrastructure variables" do
     stub_call_to_aws_to_delete_infrastructure_variable(
       aws_ssm_client_double: aws_ssm_client,
       account_id: infrastructure.account_id,
-      request_path: "/dalmatian-variables/infrastructures/test-app/staging",
-      name: "EXISTING_VARIABLE_NAME"
+      service_name: "test-app",
+      environment_name: "staging",
+      variable_name: "EXISTING_VARIABLE_NAME"
     )
 
     visit infrastructure_variables_path(infrastructure)
