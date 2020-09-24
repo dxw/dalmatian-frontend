@@ -14,12 +14,15 @@ module AwsApiHelpers
   end
 
   def stub_call_to_aws_for_environment_variables(
-    account_id:,
     aws_ssm_client_double: nil,
-    request_path:,
+    account_id:,
+    infrastructure_name:,
+    service_name:,
+    environment_name:,
     environment_variables:
   )
     aws_ssm_client = aws_ssm_client_double || stub_aws_ssm_client(account_id: account_id)
+    request_path = "/#{infrastructure_name}/#{service_name}/#{environment_name}/"
 
     allow(aws_ssm_client)
       .to receive(:get_parameters_by_path)
@@ -32,11 +35,13 @@ module AwsApiHelpers
 
   def stub_call_to_aws_for_infrastructure_variables(
     account_id:,
+    service_name:,
+    environment_name:,
     aws_ssm_client_double: nil,
-    request_path:,
     environment_variables:
   )
     aws_ssm_client = aws_ssm_client_double || stub_aws_ssm_client(account_id: account_id)
+    request_path = "/dalmatian-variables/infrastructures/#{service_name}/#{environment_name}/"
 
     allow(aws_ssm_client)
       .to receive(:get_parameters_by_path)

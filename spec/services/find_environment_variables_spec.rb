@@ -17,7 +17,9 @@ RSpec.describe FindEnvironmentVariables do
 
       stub_call_to_aws_for_environment_variables(
         account_id: infrastructure.account_id,
-        request_path: "/test/test-service/staging/",
+        infrastructure_name: infrastructure.identifier,
+        service_name: "test-service",
+        environment_name: "staging",
         environment_variables: fake_environment_variables
       )
 
@@ -52,30 +54,38 @@ RSpec.describe FindEnvironmentVariables do
 
         aws_ssm_client = stub_aws_ssm_client(account_id: infrastructure.account_id)
         stub_call_to_aws_for_environment_variables(
-          account_id: infrastructure.account_id,
           aws_ssm_client_double: aws_ssm_client,
-          request_path: "/test/first-service/staging/",
+          account_id: infrastructure.account_id,
+          infrastructure_name: infrastructure.identifier,
+          service_name: "first-service",
+          environment_name: "staging",
           environment_variables: fake_environment_variables
         )
 
         stub_call_to_aws_for_environment_variables(
-          account_id: infrastructure.account_id,
           aws_ssm_client_double: aws_ssm_client,
-          request_path: "/test/first-service/production/",
+          account_id: infrastructure.account_id,
+          infrastructure_name: infrastructure.identifier,
+          service_name: "first-service",
+          environment_name: "production",
           environment_variables: fake_environment_variables
         )
 
         stub_call_to_aws_for_environment_variables(
-          account_id: infrastructure.account_id,
           aws_ssm_client_double: aws_ssm_client,
-          request_path: "/test/second-service/staging/",
+          account_id: infrastructure.account_id,
+          infrastructure_name: infrastructure.identifier,
+          service_name: "second-service",
+          environment_name: "staging",
           environment_variables: fake_environment_variables
         )
 
         stub_call_to_aws_for_environment_variables(
-          account_id: infrastructure.account_id,
           aws_ssm_client_double: aws_ssm_client,
-          request_path: "/test/second-service/production/",
+          account_id: infrastructure.account_id,
+          infrastructure_name: infrastructure.identifier,
+          service_name: "second-service",
+          environment_name: "production",
           environment_variables: fake_environment_variables
         )
 
