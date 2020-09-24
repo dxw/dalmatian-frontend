@@ -5,7 +5,7 @@ RSpec.describe DeleteAwsParameter do
     it "returns an object with the new parameter version number" do
       infrastructure = Infrastructure.new(account_id: "345")
 
-      stub_call_to_aws_to_delete_environment_variable(
+      stub_call_to_aws_to_delete_infrastructure_variable(
         account_id: infrastructure.account_id,
         request_path: "/dalmatian-variables/infrastructures/test-app/staging",
         name: "EXISTING_VARIABLE_NAME"

@@ -122,6 +122,21 @@ module AwsApiHelpers
       .with(name: full_name)
   end
 
+  def stub_call_to_aws_to_delete_infrastructure_variable(
+    aws_ssm_client_double: nil,
+    account_id:,
+    request_path:,
+    name:
+  )
+
+    aws_ssm_client = aws_ssm_client_double || stub_aws_ssm_client(account_id: account_id)
+
+    full_name = "#{request_path}/#{name}"
+    allow(aws_ssm_client)
+      .to receive(:delete_parameter)
+      .with(name: full_name)
+  end
+
   def stub_aws_ssm_client(account_id:)
     credentials = instance_double(Aws::AssumeRoleCredentials)
     allow(Aws::AssumeRoleCredentials).to receive(:new).with(
