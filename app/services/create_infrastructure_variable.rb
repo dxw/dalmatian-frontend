@@ -9,11 +9,15 @@ class CreateInfrastructureVariable
   end
 
   def call
-    PutAwsParameter.new(infrastructure: infrastructure)
+    PutAwsParameter.new(aws_ssm_client: aws_ssm_client, infrastructure: infrastructure)
       .call(path: name_with_path, key_id: key_id, value: infrastructure_variable.value)
   end
 
   private
+
+  def aws_ssm_client
+    ClientForCoreAwsAccount.new.call
+  end
 
   def name_with_path
     "/dalmatian-variables/infrastructures/#{infrastructure.identifier}/#{infrastructure_variable.environment_name}/#{infrastructure_variable.name}"

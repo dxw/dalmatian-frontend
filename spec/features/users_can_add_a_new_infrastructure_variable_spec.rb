@@ -1,4 +1,11 @@
 feature "Users can add new infrastructure variables" do
+  let(:aws_ssm_client) do
+    stub_aws_ssm_client(
+      aws_sts_client: stub_main_aws_sts_client,
+      account_id: AwsApiHelpers::CORE_AWS_ACCOUNT_ID
+    )
+  end
+
   scenario "adds a new variable" do
     infrastructure = Infrastructure.create(
       identifier: "test-app",
@@ -7,12 +14,10 @@ feature "Users can add new infrastructure variables" do
       environments: {"staging" => []}
     )
 
-    aws_ssm_client = stub_aws_ssm_client(account_id: infrastructure.account_id)
-
-    stub_call_to_aws_for_environment_variables(
-      aws_ssm_client_double: aws_ssm_client,
-      account_id: infrastructure.account_id,
-      request_path: "/dalmatian-variables/infrastructures/test-app/staging/",
+    stub_call_to_aws_for_infrastructure_variables(
+      aws_ssm_client: aws_ssm_client,
+      service_name: "test-app",
+      environment_name: "staging",
       environment_variables: Aws::SSM::Types::GetParametersByPathResult.new(parameters: [])
     )
 
@@ -25,7 +30,7 @@ feature "Users can add new infrastructure variables" do
     end
 
     stub_call_to_aws_to_update_infrastructure_variables(
-      aws_ssm_client_double: aws_ssm_client,
+      aws_ssm_client: aws_ssm_client,
       account_id: infrastructure.account_id,
       infrastructure_identifier: infrastructure.identifier,
       environment_name: "staging",
@@ -38,10 +43,10 @@ feature "Users can add new infrastructure variables" do
       parameters: [updated_environment_variable]
     )
 
-    stub_call_to_aws_for_environment_variables(
-      aws_ssm_client_double: aws_ssm_client,
-      account_id: infrastructure.account_id,
-      request_path: "/dalmatian-variables/infrastructures/test-app/staging/",
+    stub_call_to_aws_for_infrastructure_variables(
+      aws_ssm_client: aws_ssm_client,
+      service_name: "test-app",
+      environment_name: "staging",
       environment_variables: updated_environment_variables
     )
 
@@ -61,17 +66,15 @@ feature "Users can add new infrastructure variables" do
       environments: {"staging" => []}
     )
 
-    aws_ssm_client = stub_aws_ssm_client(account_id: infrastructure.account_id)
-
     existing_environment_variable = create_aws_environment_variable(name: "EXISTING_VARIABLE_NAME", value: "EXISTING_VARIABLE_VALUE")
     existing_environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(
       parameters: [existing_environment_variable]
     )
 
-    stub_call_to_aws_for_environment_variables(
-      aws_ssm_client_double: aws_ssm_client,
-      account_id: infrastructure.account_id,
-      request_path: "/dalmatian-variables/infrastructures/test-app/staging/",
+    stub_call_to_aws_for_infrastructure_variables(
+      aws_ssm_client: aws_ssm_client,
+      service_name: "test-app",
+      environment_name: "staging",
       environment_variables: existing_environment_variables
     )
 
@@ -88,7 +91,7 @@ feature "Users can add new infrastructure variables" do
     end
 
     stub_call_to_aws_to_update_infrastructure_variables(
-      aws_ssm_client_double: aws_ssm_client,
+      aws_ssm_client: aws_ssm_client,
       account_id: infrastructure.account_id,
       infrastructure_identifier: infrastructure.identifier,
       environment_name: "staging",
@@ -101,10 +104,10 @@ feature "Users can add new infrastructure variables" do
       parameters: [updated_environment_variable]
     )
 
-    stub_call_to_aws_for_environment_variables(
-      aws_ssm_client_double: aws_ssm_client,
-      account_id: infrastructure.account_id,
-      request_path: "/dalmatian-variables/infrastructures/test-app/staging/",
+    stub_call_to_aws_for_infrastructure_variables(
+      aws_ssm_client: aws_ssm_client,
+      service_name: "test-app",
+      environment_name: "staging",
       environment_variables: updated_environment_variables
     )
 

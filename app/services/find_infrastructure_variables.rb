@@ -1,5 +1,7 @@
 class FindInfrastructureVariables
-  attr_writer :infrastructure
+  include AwsClientWrapper
+
+  attr_accessor :infrastructure
 
   def initialize(infrastructure:)
     self.infrastructure = infrastructure
@@ -10,7 +12,7 @@ class FindInfrastructureVariables
 
     infrastructure.environments.each do |environment_name, _blob|
       path = infrastructure_variable_path(environment_name: environment_name)
-      results[environment_name] = GetAwsParameter.new(infrastructure: infrastructure, path: path).call
+      results[environment_name] = GetAwsParameter.new(aws_ssm_client: aws_ssm_client, path: path).call
     end
 
     results
@@ -18,7 +20,9 @@ class FindInfrastructureVariables
 
   private
 
-  attr_reader :infrastructure
+  def aws_ssm_client
+    @aws_ssm_client ||= ClientForCoreAwsAccount.new.call
+  end
 
   def infrastructure_variable_path(environment_name:)
     "/dalmatian-variables/infrastructures/#{infrastructure.identifier}/#{environment_name}/"

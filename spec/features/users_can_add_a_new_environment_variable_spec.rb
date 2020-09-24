@@ -10,9 +10,11 @@ feature "Users can add new environment variables" do
     aws_ssm_client = stub_aws_ssm_client(account_id: infrastructure.account_id)
 
     stub_call_to_aws_for_environment_variables(
-      aws_ssm_client_double: aws_ssm_client,
+      aws_ssm_client: aws_ssm_client,
       account_id: infrastructure.account_id,
-      request_path: "/test-app/test-service/staging/",
+      infrastructure_name: infrastructure.identifier,
+      service_name: "test-service",
+      environment_name: "staging",
       environment_variables: Aws::SSM::Types::GetParametersByPathResult.new(parameters: [])
     )
 
@@ -25,7 +27,7 @@ feature "Users can add new environment variables" do
     end
 
     stub_call_to_aws_to_update_environment_variables(
-      aws_ssm_client_double: aws_ssm_client,
+      aws_ssm_client: aws_ssm_client,
       account_id: infrastructure.account_id,
       infrastructure_identifier: infrastructure.identifier,
       service_name: "test-service",
@@ -40,9 +42,11 @@ feature "Users can add new environment variables" do
     )
 
     stub_call_to_aws_for_environment_variables(
-      aws_ssm_client_double: aws_ssm_client,
+      aws_ssm_client: aws_ssm_client,
       account_id: infrastructure.account_id,
-      request_path: "/test-app/test-service/staging/",
+      infrastructure_name: infrastructure.identifier,
+      service_name: "test-service",
+      environment_name: "staging",
       environment_variables: updated_environment_variables
     )
 
@@ -70,9 +74,11 @@ feature "Users can add new environment variables" do
     )
 
     stub_call_to_aws_for_environment_variables(
-      aws_ssm_client_double: aws_ssm_client,
+      aws_ssm_client: aws_ssm_client,
       account_id: infrastructure.account_id,
-      request_path: "/test-app/test-service/staging/",
+      infrastructure_name: infrastructure.identifier,
+      service_name: "test-service",
+      environment_name: "staging",
       environment_variables: existing_environment_variables
     )
 
@@ -89,7 +95,7 @@ feature "Users can add new environment variables" do
     end
 
     stub_call_to_aws_to_update_environment_variables(
-      aws_ssm_client_double: aws_ssm_client,
+      aws_ssm_client: aws_ssm_client,
       account_id: infrastructure.account_id,
       infrastructure_identifier: infrastructure.identifier,
       service_name: "test-service",
@@ -104,9 +110,11 @@ feature "Users can add new environment variables" do
     )
 
     stub_call_to_aws_for_environment_variables(
-      aws_ssm_client_double: aws_ssm_client,
+      aws_ssm_client: aws_ssm_client,
       account_id: infrastructure.account_id,
-      request_path: "/test-app/test-service/staging/",
+      infrastructure_name: infrastructure.identifier,
+      service_name: "test-service",
+      environment_name: "staging",
       environment_variables: updated_environment_variables
     )
 

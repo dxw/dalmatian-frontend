@@ -16,25 +16,31 @@ feature "Users can delete environment variables" do
     )
 
     stub_call_to_aws_for_environment_variables(
-      aws_ssm_client_double: aws_ssm_client,
+      aws_ssm_client: aws_ssm_client,
       account_id: infrastructure.account_id,
-      request_path: "/test-app/test-service/staging/",
+      infrastructure_name: infrastructure.identifier,
+      service_name: "test-service",
+      environment_name: "staging",
       environment_variables: existing_environment_variables
     )
 
     stub_call_to_aws_to_delete_environment_variable(
-      aws_ssm_client_double: aws_ssm_client,
+      aws_ssm_client: aws_ssm_client,
       account_id: infrastructure.account_id,
-      request_path: "test-app/test-service/staging",
-      name: "EXISTING_VARIABLE_NAME"
+      infrastructure_name: infrastructure.identifier,
+      service_name: "test-service",
+      environment_name: "staging",
+      variable_name: "EXISTING_VARIABLE_NAME"
     )
 
     visit infrastructure_environment_variables_path(infrastructure)
 
     stub_call_to_aws_for_environment_variables(
-      aws_ssm_client_double: aws_ssm_client,
+      aws_ssm_client: aws_ssm_client,
       account_id: infrastructure.account_id,
-      request_path: "/test-app/test-service/staging/",
+      infrastructure_name: infrastructure.identifier,
+      service_name: "test-service",
+      environment_name: "staging",
       environment_variables: Aws::SSM::Types::GetParametersByPathResult.new(parameters: [])
     )
 

@@ -23,7 +23,9 @@ feature "Users can show and hide secret variables" do
 
       stub_call_to_aws_for_environment_variables(
         account_id: infrastructure.account_id,
-        request_path: "/test-app/test-service/staging/",
+        infrastructure_name: infrastructure.identifier,
+        service_name: "test-service",
+        environment_name: "staging",
         environment_variables: environment_variables
       )
 
@@ -41,7 +43,9 @@ feature "Users can show and hide secret variables" do
 
       stub_call_to_aws_for_environment_variables(
         account_id: infrastructure.account_id,
-        request_path: "/test-app/test-service/staging/",
+        infrastructure_name: infrastructure.identifier,
+        service_name: "test-service",
+        environment_name: "staging",
         environment_variables: environment_variables
       )
 
@@ -73,7 +77,9 @@ feature "Users can show and hide secret variables" do
 
       stub_call_to_aws_for_environment_variables(
         account_id: infrastructure.account_id,
-        request_path: "/test-app/test-service/staging/",
+        infrastructure_name: infrastructure.identifier,
+        service_name: "test-service",
+        environment_name: "staging",
         environment_variables: environment_variables
       )
 

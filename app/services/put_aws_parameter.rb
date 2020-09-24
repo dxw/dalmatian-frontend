@@ -1,9 +1,8 @@
 class PutAwsParameter
-  include AwsClientWrapper
+  attr_accessor :aws_ssm_client, :infrastructure
 
-  attr_accessor :infrastructure
-
-  def initialize(infrastructure:)
+  def initialize(aws_ssm_client:, infrastructure:)
+    self.aws_ssm_client = aws_ssm_client
     self.infrastructure = infrastructure
   end
 

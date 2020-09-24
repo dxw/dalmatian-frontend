@@ -1,4 +1,6 @@
 class FindEnvironmentVariables
+  include AwsClientWrapper
+
   attr_writer :infrastructure
 
   def initialize(infrastructure:)
@@ -14,7 +16,7 @@ class FindEnvironmentVariables
 
       infrastructure.environments.each do |environment_name, _blob|
         path = environment_variable_path(service_name: service_name, environment_name: environment_name)
-        results[service_name][environment_name] = GetAwsParameter.new(infrastructure: infrastructure, path: path).call
+        results[service_name][environment_name] = GetAwsParameter.new(aws_ssm_client: aws_ssm_client, path: path).call
       end
     end
 
@@ -24,6 +26,10 @@ class FindEnvironmentVariables
   private
 
   attr_reader :infrastructure
+
+  def aws_ssm_client
+    @aws_ssm_client ||= ClientForInfrastructureAwsAccount.new(infrastructure: infrastructure).call
+  end
 
   def environment_variable_path(service_name:, environment_name:)
     "/#{infrastructure.identifier}/#{service_name}/#{environment_name}/"
