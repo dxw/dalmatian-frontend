@@ -20,7 +20,6 @@ gem "rollbar"
 gem "rails", "~> 6.0.0"
 gem "sass-rails", "~> 6.0"
 gem "simple_form"
-gem "turbolinks", "~> 5"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "uglifier", ">= 1.3.0"
 
