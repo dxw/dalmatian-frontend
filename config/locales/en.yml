@@ -7,9 +7,15 @@ en:
       new: "Create or update environment variable"
     infrastructure_variable:
       new: "Create or update infrastructure variable"
+    env_files:
+      confirm: "Confirm changes"
+      new: "Upload multiple environment variables"
   button:
     add_or_update_variable: "Create or update variable"
     delete: "Delete"
+    upload_env_file: "Upload multiple variables"
+    apply: "Apply"
+    continue: "Continue"
   tab:
     configuration: "Configuration"
     environment_variables: "Environment variables"

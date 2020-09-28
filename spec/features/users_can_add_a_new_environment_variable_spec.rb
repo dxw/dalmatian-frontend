@@ -132,8 +132,4 @@ feature "Users can add new environment variables" do
     expect(page).to have_content("Name can't be blank")
     expect(page).to have_content("Value can't be blank")
   end
-
-  scenario "adds multiple new variables at once using a file" do
-
-  end
 end

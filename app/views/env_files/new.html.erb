@@ -1,0 +1,8 @@
+<div class="col-8 offset-2">
+  <h3 class="mt-5"><%= I18n.t("page_title.env_files.new") %></h3>
+
+  <%= simple_form_for(@env_file, as: :env_file, method: :post, url: confirm_infrastructure_env_files_path(@infrastructure, service_name: service_name, environment_name: environment_name)) do |f| %>
+    <%= f.input :tempfile, as: :file %>
+    <%= f.submit I18n.t("button.continue"), class: "btn btn-success" %>
+  <% end %>
+</div>
