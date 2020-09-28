@@ -19,20 +19,19 @@ class EnvFilesController < ApplicationController
     @infrastructure = Infrastructure.find(infrastructure_id)
     @env_file = EnvFile.new(file_name: env_file_params[:file_name])
 
-    @env_file.contents.each_pair do |key, value|
-      environment_variable = EnvironmentVariable.new(
-        name: key,
-        value: value,
-        service_name: service_name,
-        environment_name: environment_name
-      )
-      CreateEnvironmentVariable.new(
-        infrastructure: @infrastructure,
-        environment_variable: environment_variable
-      ).call
-    end
+    results = CreateMultipleEnvironmentVariables.new(
+      infrastructure: @infrastructure,
+      env_file: @env_file,
+      service_name: service_name,
+      environment_name: environment_name
+    ).call
 
-    redirect_to infrastructure_environment_variables_path(@infrastructure)
+    successful_results, failed_results = results.partition { |result| result.success? }
+    flash_message = {}
+    flash_message[:notice] = "#{successful_results.count} #{"change".pluralize(successful_results.count)} succeeded" unless successful_results.empty?
+    flash_message[:error] = "#{failed_results.count} #{"change".pluralize(successful_results.count)} failed with: " + failed_results.map(&:error_message).join(", ") unless failed_results.empty?
+
+    redirect_to infrastructure_environment_variables_path(@infrastructure), flash: flash_message
   end
 
   def service_name
