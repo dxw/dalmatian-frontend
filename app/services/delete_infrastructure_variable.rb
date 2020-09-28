@@ -10,8 +10,7 @@ class DeleteInfrastructureVariable
   def call(infrastructure_variable:)
     full_name = "/dalmatian-variables/infrastructures/#{infrastructure.identifier}/#{infrastructure_variable.environment_name}/#{infrastructure_variable.name}"
 
-    result = DeleteAwsParameter.new(aws_ssm_client: aws_ssm_client, infrastructure: infrastructure).call(path: full_name)
-    result
+    DeleteAwsParameter.new(aws_ssm_client: aws_ssm_client, infrastructure: infrastructure).call(path: full_name)
   end
 
   private

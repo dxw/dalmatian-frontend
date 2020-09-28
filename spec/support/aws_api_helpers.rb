@@ -16,12 +16,7 @@ module AwsApiHelpers
   end
 
   def stub_call_to_aws_for_environment_variables(
-    aws_ssm_client: nil,
-    account_id:,
-    infrastructure_name:,
-    service_name:,
-    environment_name:,
-    environment_variables:
+    account_id:, infrastructure_name:, service_name:, environment_name:, environment_variables:, aws_ssm_client: nil
   )
     aws_ssm_client ||= stub_aws_ssm_client(account_id: account_id)
     request_path = "/#{infrastructure_name}/#{service_name}/#{environment_name}/"
@@ -36,10 +31,7 @@ module AwsApiHelpers
   end
 
   def stub_call_to_aws_for_infrastructure_variables(
-    aws_ssm_client: nil,
-    service_name:,
-    environment_name:,
-    environment_variables:
+    service_name:, environment_name:, environment_variables:, aws_ssm_client: nil
   )
     aws_ssm_client ||= stub_aws_ssm_client(
       aws_sts_client: stub_main_aws_sts_client,
@@ -57,13 +49,7 @@ module AwsApiHelpers
   end
 
   def stub_call_to_aws_to_update_environment_variables(
-    aws_ssm_client: nil,
-    account_id:,
-    infrastructure_identifier:,
-    service_name:,
-    environment_name:,
-    variable_name:,
-    variable_value:
+    account_id:, infrastructure_identifier:, service_name:, environment_name:, variable_name:, variable_value:, aws_ssm_client: nil
   )
     aws_ssm_client ||= stub_aws_ssm_client(account_id: account_id)
 
@@ -85,12 +71,7 @@ module AwsApiHelpers
   end
 
   def stub_call_to_aws_to_update_infrastructure_variables(
-    aws_ssm_client: nil,
-    account_id:,
-    infrastructure_identifier:,
-    environment_name:,
-    variable_name:,
-    variable_value:
+    account_id:, infrastructure_identifier:, environment_name:, variable_name:, variable_value:, aws_ssm_client: nil
   )
     aws_ssm_client ||= stub_aws_ssm_client(account_id: account_id)
 
@@ -112,12 +93,7 @@ module AwsApiHelpers
   end
 
   def stub_call_to_aws_to_delete_environment_variable(
-    aws_ssm_client: nil,
-    account_id:,
-    infrastructure_name:,
-    service_name:,
-    environment_name:,
-    variable_name:
+    account_id:, infrastructure_name:, service_name:, environment_name:, variable_name:, aws_ssm_client: nil
   )
 
     aws_ssm_client ||= stub_aws_ssm_client(account_id: account_id)
@@ -129,11 +105,7 @@ module AwsApiHelpers
   end
 
   def stub_call_to_aws_to_delete_infrastructure_variable(
-    aws_ssm_client: nil,
-    account_id:,
-    service_name:,
-    environment_name:,
-    variable_name:
+    account_id:, service_name:, environment_name:, variable_name:, aws_ssm_client: nil
   )
 
     aws_ssm_client ||= stub_aws_ssm_client(account_id: account_id)
@@ -144,7 +116,7 @@ module AwsApiHelpers
       .with(name: full_name)
   end
 
-  def stub_aws_ssm_client(aws_sts_client: stub_aws_sts_client, account_id:)
+  def stub_aws_ssm_client(account_id:, aws_sts_client: stub_aws_sts_client)
     credentials = instance_double(Aws::AssumeRoleCredentials)
     allow(Aws::AssumeRoleCredentials).to receive(:new).with(
       client: aws_sts_client,

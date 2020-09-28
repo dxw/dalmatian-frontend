@@ -10,8 +10,7 @@ class DeleteEnvironmentVariable
   def call(environment_variable:)
     full_name = "#{infrastructure.identifier}/#{environment_variable.full_aws_name}"
 
-    result = DeleteAwsParameter.new(aws_ssm_client: aws_ssm_client, infrastructure: infrastructure).call(path: full_name)
-    result
+    DeleteAwsParameter.new(aws_ssm_client: aws_ssm_client, infrastructure: infrastructure).call(path: full_name)
   end
 
   private
