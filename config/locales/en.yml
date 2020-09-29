@@ -12,8 +12,8 @@ en:
       new: "Upload multiple environment variables"
   button:
     add_or_update_variable: "Create or update variable"
+    download_environment_variables: Download
     delete: "Delete"
-    upload_env_file: "Upload multiple variables"
     upload_env_file: "Upload"
     apply: "Apply"
     continue: "Continue"

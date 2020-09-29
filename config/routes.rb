@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :infrastructures, only: [:show, :index] do
     resources :environment_variables, only: [:new, :create, :destroy, :index] do
       collection do
+        resources :downloads, only: [:new]
         resources :env_files, only: [:new, :create] do
           collection do
             post "confirm", to: "env_files#confirm"
