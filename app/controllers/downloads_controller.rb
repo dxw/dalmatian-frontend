@@ -7,7 +7,7 @@ class DownloadsController < ApplicationController
     environment_variables = all_environment_variables[service_name][environment_name]
 
     filename = "dalmatian_#{service_name}_#{environment_name}_#{Time.now.utc.to_i}.env"
-    file_path = "./tmp/#{filename}"
+    file_path = "./tmp/downloads/#{filename}"
     File.atomic_write(file_path) do |file|
       environment_variables.each do |variable|
         file.write("#{variable.name}=#{variable.value}\n")

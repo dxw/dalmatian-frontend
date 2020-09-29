@@ -18,6 +18,10 @@ Bundler.require(*Rails.groups)
 
 module DalmatianFrontend
   class Application < Rails::Application
+    # Remove environment variable downloads from any previous session
+    FileUtils.remove_dir("tmp/downloads") if Dir.exist?("tmp/downloads")
+    Dir.mkdir("tmp/downloads")
+
     config.autoload_paths += %W[#{config.root}/lib]
 
     config.mongoid.logger.level = Logger::WARN
