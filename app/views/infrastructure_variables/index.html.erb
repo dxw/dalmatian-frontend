@@ -8,7 +8,7 @@
       <%= environment_name %>
       <small class="text-muted">environment</small>
     </h3>
-    <%= link_to I18n.t("button.add_or_update_variable"), new_infrastructure_variable_path(@infrastructure, environment_name: environment_name), class: "btn btn-primary mb-4" %>
+    <%= link_to I18n.t("button.add_or_update_variable"), new_infrastructure_variable_path(@infrastructure, environment_name: environment_name), class: "btn btn-success mb-4" %>
 
     <%= render "environment_variable_table", infrastructure: @infrastructure, infrastructure_variables: infrastructure_variables, environment_name: environment_name %>
   <% end %>
