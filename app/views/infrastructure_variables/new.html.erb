@@ -1,7 +1,7 @@
-<div class="col-4 offset-4">
   <h1 class="mt-5">
     <%= I18n.t("page_title.infrastructure_variable.new") %>
   </h1>
+<div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-sm-12">
 
   <p>If you provide an existing variable name this will update the existing value. It is case sensitive.</p>
   <%= simple_form_for(@infrastructure_variable, as: :infrastructure_variable, method: :post, url: infrastructure_variables_path(@infrastructure, environment_name: environment_name)) do |f| %>
