@@ -14,6 +14,7 @@ en:
     add_or_update_variable: "Create or update variable"
     delete: "Delete"
     upload_env_file: "Upload multiple variables"
+    upload_env_file: "Upload"
     apply: "Apply"
     continue: "Continue"
   tab:
