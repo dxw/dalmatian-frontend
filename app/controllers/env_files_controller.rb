@@ -9,10 +9,14 @@ class EnvFilesController < ApplicationController
   def confirm
     @infrastructure = Infrastructure.find(infrastructure_id)
 
-    file_name = env_file_params[:tempfile].original_filename
-    EnvFile.persist(tempfile: env_file_params[:tempfile])
-
-    @env_file = EnvFile.new(file_name: file_name)
+    if EnvFile.valid?(tempfile: env_file_params[:tempfile])
+      EnvFile.persist(tempfile: env_file_params[:tempfile])
+      @env_file = EnvFile.new(file_name: env_file_params[:tempfile].original_filename)
+    else
+      redirect_to new_infrastructure_env_file_path(
+        @infrastructure, service_name: service_name, environment_name: environment_name
+      ), flash: {error: "Invalid file"}
+    end
   end
 
   def create
