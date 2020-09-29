@@ -1,0 +1,15 @@
+<div class="col-8 offset-2">
+  <h3 class="mt-5"><%= I18n.t("page_title.env_files.confirm") %></h3>
+
+  <dl class="row">
+    <% @env_file.contents.each_pair do |key, value| %>
+      <dt class="col-sm-3"><%= key %></dt>
+      <dd class="col-sm-9"><%= value %></dd>
+    <% end %>
+  </dl>
+
+  <%= simple_form_for(@env_file, as: :env_file, method: :post, url: infrastructure_env_files_path(@infrastructure, service_name: service_name, environment_name: environment_name)) do |f| %>
+    <%= f.input :file_name, as: :hidden %>
+    <%= f.submit I18n.t("button.apply"), class: "btn btn-success" %>
+  <% end %>
+</div>

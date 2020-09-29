@@ -14,5 +14,8 @@ class PutAwsParameter
       key_id: key_id,
       overwrite: true
     )
+    Result.new(true)
+  rescue Aws::SSM::Errors::ValidationException => error
+    Result.new(false, error, "AWS validation error for #{path}: '#{error.message}'")
   end
 end

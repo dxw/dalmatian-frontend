@@ -1,0 +1,24 @@
+<div class="col-8 offset-2">
+  <h3 class="mt-5"><%= I18n.t("page_title.env_files.new") %></h3>
+  <p>Provide a file with the following:</p>
+  <ul>
+    <li>.env format</li>
+    <li>no quotes</li>
+    <li>keys and values separated by an equals sign</li>
+  </ul>
+  <pre>
+    <code>
+      # service.env
+
+      FOO=BAR
+      123=456
+      bar=baz
+      DATABASE_URL=postgres://
+    </code>
+  </pre>
+
+  <%= simple_form_for(@env_file, as: :env_file, method: :post, url: confirm_infrastructure_env_files_path(@infrastructure, service_name: service_name, environment_name: environment_name)) do |f| %>
+    <%= f.input :tempfile, as: :file, label: "File" %>
+    <%= f.submit I18n.t("button.continue"), class: "btn btn-success" %>
+  <% end %>
+</div>

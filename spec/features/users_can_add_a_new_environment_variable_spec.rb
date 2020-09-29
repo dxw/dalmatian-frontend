@@ -1,14 +1,15 @@
 feature "Users can add new environment variables" do
-  scenario "adds a new variable" do
-    infrastructure = Infrastructure.create(
+  let(:infrastructure) do
+    Infrastructure.create(
       identifier: "test-app",
       account_id: "345",
       services: [{"name" => "test-service"}],
       environments: {"staging" => []}
     )
+  end
+  let(:aws_ssm_client) { stub_aws_ssm_client(account_id: infrastructure.account_id) }
 
-    aws_ssm_client = stub_aws_ssm_client(account_id: infrastructure.account_id)
-
+  scenario "adds a new variable" do
     stub_call_to_aws_for_environment_variables(
       aws_ssm_client: aws_ssm_client,
       account_id: infrastructure.account_id,
@@ -59,15 +60,6 @@ feature "Users can add new environment variables" do
   end
 
   scenario "updates an existing variable" do
-    infrastructure = Infrastructure.create(
-      identifier: "test-app",
-      account_id: "345",
-      services: [{"name" => "test-service"}],
-      environments: {"staging" => []}
-    )
-
-    aws_ssm_client = stub_aws_ssm_client(account_id: infrastructure.account_id)
-
     existing_environment_variable = create_aws_environment_variable(name: "EXISTING_VARIABLE_NAME", value: "EXISTING_VARIABLE_VALUE")
     existing_environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(
       parameters: [existing_environment_variable]
@@ -128,13 +120,6 @@ feature "Users can add new environment variables" do
   end
 
   scenario "validates the presence of both values" do
-    infrastructure = Infrastructure.create(
-      identifier: "test-app",
-      account_id: "345",
-      services: [{"name" => "test-service"}],
-      environments: {"staging" => []}
-    )
-
     # Deliberately omit query params for service_name and environment_name
     visit new_infrastructure_environment_variable_path(infrastructure)
 
