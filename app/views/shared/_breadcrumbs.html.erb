@@ -1,0 +1,11 @@
+<nav aria-label="breadcrumb" class="mt-5">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to locals[:infrastructure].identifier, infrastructure_environment_variables_path(locals[:infrastructure]) %>
+    </li>
+    <% if locals.key?(:service_name) %>
+      <li class="breadcrumb-item"><%= service_name %></li>
+    <% end %>
+    <li class="breadcrumb-item active" aria-current="page"><%= environment_name %></li>
+  </ol>
+</nav>

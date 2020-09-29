@@ -1,5 +1,7 @@
-  <h1 class="mt-5"><%= I18n.t("page_title.environment_variable.new") %></h1>
 <div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-sm-12">
+  <%= render "shared/breadcrumbs", locals: { infrastructure: @infrastructure, service_name: service_name, environment_name: environment_name } %>
+
+  <h1><%= I18n.t("page_title.environment_variable.new") %></h1>
 
   <p>If you provide an existing variable name this will update the existing value. It is case sensitive.</p>
   <%= simple_form_for(@environment_variable, as: :environment_variable, method: :post, url: infrastructure_environment_variables_path(@infrastructure, service_name: service_name, environment_name: environment_name)) do |f| %>
