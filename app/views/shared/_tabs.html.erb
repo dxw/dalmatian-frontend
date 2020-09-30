@@ -8,4 +8,7 @@
   <li class="nav-item">
     <%= link_to I18n.t("tab.infrastructure_variables"), infrastructure_variables_path(@infrastructure), class: "nav-link #{active_link(path: infrastructure_variables_path(@infrastructure))}" %>
   </li>
+  <li class="nav-item">
+    <%= link_to I18n.t("tab.logs"), infrastructure_builds_path(@infrastructure), class: "nav-link #{active_link(path: infrastructure_builds_path(@infrastructure))}" %>
+  </li>
 </ul>

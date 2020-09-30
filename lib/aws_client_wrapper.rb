@@ -24,6 +24,15 @@ module AwsClientWrapper
     end
   end
 
+  class CodeBuildClient < Client
+    def call
+      Aws::CodeBuild::Client.new(
+        region: "eu-west-2",
+        credentials: role_credentials
+      )
+    end
+  end
+
   class SsmClient < Client
     def call
       Aws::SSM::Client.new(credentials: role_credentials)

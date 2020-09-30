@@ -21,6 +21,7 @@ en:
     configuration: "Configuration"
     environment_variables: "Environment variables"
     infrastructure_variables: "Infrastructure variables"
+    logs: "Builds"
   alerts:
     introduction_warning:
       short: "Use with caution."

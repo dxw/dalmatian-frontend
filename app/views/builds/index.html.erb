@@ -1,0 +1,28 @@
+<h1 class="mt-4 mb-4"><%= @infrastructure.identifier %></h1>
+
+<%= render "shared/tabs", locals: { infrastructure: @infrastructure } %>
+
+<div class="col-12 col-md-12 pt-4">
+  <table class="table table-striped table-bordered table-hover table-responsive">
+    <thead>
+      <tr>
+        <th scope="col">Number</th>
+        <th scope="col">Status</th>
+        <th scope="col">Start time</th>
+        <th scope="col">Source</th>
+        <th scope="col">Logs</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @builds.each do |build| %>
+        <tr>
+          <td><%= build.build_number %></td>
+          <td><%= build.build_status %></td>
+          <td><%= build.start_time %></td>
+          <td><%= build.source_version %></td>
+          <td><%= link_to "View in AWS", build.logs.deep_link, target: "_blank" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
