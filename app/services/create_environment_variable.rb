@@ -16,7 +16,7 @@ class CreateEnvironmentVariable
   private
 
   def aws_ssm_client
-    ClientForInfrastructureAwsAccount.new(infrastructure: infrastructure).call
+    SSMClientForInfrastructureAwsAccount.new(infrastructure: infrastructure).call
   end
 
   def name_with_path

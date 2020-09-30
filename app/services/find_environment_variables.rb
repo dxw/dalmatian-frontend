@@ -28,7 +28,7 @@ class FindEnvironmentVariables
   attr_reader :infrastructure
 
   def aws_ssm_client
-    @aws_ssm_client ||= ClientForInfrastructureAwsAccount.new(infrastructure: infrastructure).call
+    @aws_ssm_client ||= SSMClientForInfrastructureAwsAccount.new(infrastructure: infrastructure).call
   end
 
   def environment_variable_path(service_name:, environment_name:)
