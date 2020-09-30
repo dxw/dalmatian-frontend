@@ -25,11 +25,21 @@ module AwsClientWrapper
   end
 
   class CodeBuildClient < Client
+    attr_accessor :infrastructure
+
+    def initialize(infrastructure:)
+      self.infrastructure = infrastructure
+    end
+    
     def call
       Aws::CodeBuild::Client.new(
         region: "eu-west-2",
         credentials: role_credentials
       )
+    end
+
+    def role_arn
+      "arn:aws:iam::#{infrastructure.account_id}:role/#{aws_role}"
     end
   end
 
