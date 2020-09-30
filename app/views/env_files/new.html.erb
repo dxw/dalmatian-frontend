@@ -1,5 +1,7 @@
-<div class="col-8 offset-2">
-  <h3 class="mt-5"><%= I18n.t("page_title.env_files.new") %></h3>
+<div class="col-lg-6 offset-lg-3 col-md-10 offset-md-1 col-sm-12">
+  <%= render "shared/breadcrumbs", locals: { infrastructure: @infrastructure, service_name: service_name, environment_name: environment_name } %>
+
+  <h3><%= I18n.t("page_title.env_files.new") %></h3>
   <p>Provide a file with the following:</p>
   <ul>
     <li>.env format</li>
