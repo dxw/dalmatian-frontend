@@ -16,6 +16,6 @@ class DeleteEnvironmentVariable
   private
 
   def aws_ssm_client
-    ClientForInfrastructureAwsAccount.new(infrastructure: infrastructure).call
+    SSMClientForInfrastructureAwsAccount.new(infrastructure: infrastructure).call
   end
 end

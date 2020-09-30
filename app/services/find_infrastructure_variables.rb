@@ -21,7 +21,7 @@ class FindInfrastructureVariables
   private
 
   def aws_ssm_client
-    @aws_ssm_client ||= ClientForCoreAwsAccount.new.call
+    @aws_ssm_client ||= SSMClientForCoreAwsAccount.new.call
   end
 
   def infrastructure_variable_path(environment_name:)

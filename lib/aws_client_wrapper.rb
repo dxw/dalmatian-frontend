@@ -1,9 +1,5 @@
 module AwsClientWrapper
   class Client
-    def call
-      Aws::SSM::Client.new(credentials: role_credentials)
-    end
-
     private
 
     def aws_role
@@ -28,7 +24,13 @@ module AwsClientWrapper
     end
   end
 
-  class ClientForCoreAwsAccount < Client
+  class SsmClient < Client
+    def call
+      Aws::SSM::Client.new(credentials: role_credentials)
+    end
+  end
+
+  class SSMClientForCoreAwsAccount < SsmClient
     include AwsClientWrapper
 
     private def role_arn
@@ -40,7 +42,7 @@ module AwsClientWrapper
     end
   end
 
-  class ClientForInfrastructureAwsAccount < Client
+  class SSMClientForInfrastructureAwsAccount < SsmClient
     include AwsClientWrapper
 
     attr_accessor :infrastructure
