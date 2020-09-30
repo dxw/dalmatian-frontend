@@ -3,7 +3,8 @@
 class BuildsController < ApplicationController
   def index
     @infrastructure = Infrastructure.find(infrastructure_id)
-    @builds = FindBuilds.new(infrastructure: @infrastructure).call
+    @dalmatian_builds = FindDalmatianBuilds.new(infrastructure: @infrastructure).call
+    @service_builds = FindServiceBuilds.new(infrastructure: @infrastructure).call
   end
 
   private

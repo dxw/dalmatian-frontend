@@ -22,15 +22,19 @@ module AwsClientWrapper
     def core_aws_client
       @core_aws_client ||= Aws::STS::Client.new
     end
+
+    def core_aws_account_id
+      Aws::STS::Client.new.get_caller_identity.account
+    end
   end
 
-  class CodeBuildClient < Client
+  class CodeBuildClientForInfrastructureAwsAccount < Client
     attr_accessor :infrastructure
 
     def initialize(infrastructure:)
       self.infrastructure = infrastructure
     end
-    
+
     def call
       Aws::CodeBuild::Client.new(
         region: "eu-west-2",
@@ -40,6 +44,19 @@ module AwsClientWrapper
 
     def role_arn
       "arn:aws:iam::#{infrastructure.account_id}:role/#{aws_role}"
+    end
+  end
+
+  class CodeBuildClientForCoreAwsAccount < Client
+    def call
+      Aws::CodeBuild::Client.new(
+        region: "eu-west-2",
+        credentials: role_credentials
+      )
+    end
+
+    def role_arn
+      "arn:aws:iam::#{core_aws_account_id}:role/#{aws_role}"
     end
   end
 
@@ -54,10 +71,6 @@ module AwsClientWrapper
 
     private def role_arn
       "arn:aws:iam::#{core_aws_account_id}:role/#{aws_role}"
-    end
-
-    private def core_aws_account_id
-      Aws::STS::Client.new.get_caller_identity.account
     end
   end
 

@@ -2,7 +2,9 @@
 
 <%= render "shared/tabs", locals: { infrastructure: @infrastructure } %>
 
+
 <div class="col-12 col-md-12 pt-4">
+  <h1 class="mt-4 mb-4">Dalmatian builds</h1>
   <table class="table table-striped table-bordered table-hover table-responsive">
     <thead>
       <tr>
@@ -14,7 +16,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @builds.each do |build| %>
+      <% @dalmatian_builds.each do |build| %>
         <tr>
           <td><%= build.build_number %></td>
           <td><%= build.build_status %></td>
@@ -25,4 +27,36 @@
       <% end %>
     </tbody>
   </table>
+
+  <h1 class="mt-4 mb-4">Service builds</h1>
+  <% @service_builds.each_pair do |service_name, environment_hash| %>
+    <% environment_hash.each do |environment_name, builds| %>
+      <h3>
+        <%= service_name %>
+        <small class="text-muted"><%= environment_name %> environment</small>
+      </h3>
+      <table class="table table-striped table-bordered table-hover table-responsive">
+        <thead>
+          <tr>
+            <th scope="col">Number</th>
+            <th scope="col">Status</th>
+            <th scope="col">Start time</th>
+            <th scope="col">Source</th>
+            <th scope="col">Logs</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% builds.each do |build| %>
+            <tr>
+              <td><%= build.build_number %></td>
+              <td><%= build.build_status %></td>
+              <td><%= build.start_time %></td>
+              <td><%= build.source_version %></td>
+              <td><%= link_to "View in AWS", build.logs.deep_link, target: "_blank" %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% end %>
+  <% end %>
 </div>

@@ -171,11 +171,11 @@ module AwsApiHelpers
     aws_sts_client
   end
 
-  def stub_aws_code_build_client(account_id:, aws_sts_client: stub_aws_sts_client)
+  def stub_aws_code_build_client(account_id:, aws_sts_client: stub_main_aws_sts_client)
     credentials = instance_double(Aws::AssumeRoleCredentials)
     allow(Aws::AssumeRoleCredentials).to receive(:new).with(
       client: aws_sts_client,
-      role_arn: "arn:aws:iam::#{account_id}:role/#{ENV["AWS_ROLE"]}",
+      role_arn: "arn:aws:iam::#{CORE_AWS_ACCOUNT_ID}:role/#{ENV["AWS_ROLE"]}",
       role_session_name: "role_session_name"
     ).and_return(credentials)
 
