@@ -11,6 +11,7 @@ feature "Users can see build information" do
           action_states: [
             Aws::CodePipeline::Types::ActionState.new(
               action_name: "Source",
+              revision_url: "https://github.com/dxw/app/commit/123",
               latest_execution: Aws::CodePipeline::Types::ActionExecution.new(
                 status: "Succeeded",
                 summary: "Merge pull request #32 from dxw",
@@ -74,6 +75,7 @@ feature "Users can see build information" do
       expect(page).to have_content("2019-07-03 16:09:04 +0100")
       expect(page).to have_content("Succeeded")
       expect(page).not_to have_link("View in AWS")
+      expect(page).to have_link("View revision", href: "https://github.com/dxw/app/commit/123")
     end
 
     within(".stage-build") do
@@ -81,6 +83,7 @@ feature "Users can see build information" do
       expect(page).to have_content("2020-09-03 11:11:26 +0100")
       expect(page).to have_content("Succeeded")
       expect(page).to have_link("View in AWS", href: "https://console.aws.amazon.com/codebuild/home?region=eu-west-2#/builds/test-app-test-service-staging-codebuild:b68c1dd9-c2a3-4151-84fe-647ed77d11f4/view/new")
+      expect(page).not_to have_link("View revision")
     end
 
     within(".stage-deploy") do
@@ -88,6 +91,7 @@ feature "Users can see build information" do
       expect(page).to have_content("2020-09-03 11:14:01 +0100")
       expect(page).to have_content("Succeeded")
       expect(page).to have_link("View in AWS", href: "https://console.aws.amazon.com/ecs/home?region=eu-west-2#/clusters/test-app-staging/services/test-service/deployments")
+      expect(page).not_to have_link("View revision")
     end
   end
 

@@ -22,8 +22,12 @@
                     <h5 class="card-title"><%= action.action_name %></h5>
                     <h6 class="card-subtitle mb-2 text-muted"><%= action.latest_execution.last_status_change %></h6>
                     <p class="card-text"><%= action.latest_execution.status%></p>
-                    <% if external_url.present? %>
-                      <%= link_to "View in AWS", external_url, target: "_blank", class: "card-link" %>
+                    <p class="card-text"><%= action.latest_execution.summary %></p>
+                    <% if action.latest_execution.external_execution_url %>
+                      <%= link_to "View in AWS", action.latest_execution.external_execution_url, target: "_blank", class: "card-link" %>
+                    <% end %>
+                    <% if action.revision_url %>
+                      <%= link_to "View revision", action.revision_url, target: "_blank", class: "card-link" %>
                     <% end %>
                   </div>
                 </div>
