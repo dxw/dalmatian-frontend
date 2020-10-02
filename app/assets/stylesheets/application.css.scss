@@ -17,3 +17,18 @@
  pre {
    background-color: #eeeeee;
  }
+
+.build-card {
+  border-left-color: rgb(255, 193, 7);
+  border-left-width: 6px;
+}
+
+.succeeded-card {
+  border-left-color: rgb(40, 167, 69);
+  border-left-width: 6px;
+}
+
+.failed-card {
+  border-left-color: rgb(220, 53, 69);
+  border-left-width: 6px;
+}

@@ -68,11 +68,10 @@ feature "Users can see build information" do
     visit infrastructure_builds_path(infrastructure)
 
     expect(page).to have_content("test-app")
-    expect(page).to have_content("Code Pipelines")
 
     within(".stage-source") do
       expect(page).to have_content("Source")
-      expect(page).to have_content("2019-07-03 16:09:04 +0100")
+      expect(page).to have_content("Wed, 03 Jul 2019 16:09:04 +0100")
       expect(page).to have_content("Succeeded")
       expect(page).not_to have_link("View in AWS")
       expect(page).to have_link("View revision", href: "https://github.com/dxw/app/commit/123")
@@ -80,7 +79,7 @@ feature "Users can see build information" do
 
     within(".stage-build") do
       expect(page).to have_content("Build")
-      expect(page).to have_content("2020-09-03 11:11:26 +0100")
+      expect(page).to have_content("Thu, 03 Sep 2020 11:11:26 +0100")
       expect(page).to have_content("Succeeded")
       expect(page).to have_link("View in AWS", href: "https://console.aws.amazon.com/codebuild/home?region=eu-west-2#/builds/test-app-test-service-staging-codebuild:b68c1dd9-c2a3-4151-84fe-647ed77d11f4/view/new")
       expect(page).not_to have_link("View revision")
@@ -88,7 +87,7 @@ feature "Users can see build information" do
 
     within(".stage-deploy") do
       expect(page).to have_content("Deploy")
-      expect(page).to have_content("2020-09-03 11:14:01 +0100")
+      expect(page).to have_content("Thu, 03 Sep 2020 11:14:01 +0100")
       expect(page).to have_content("Succeeded")
       expect(page).to have_link("View in AWS", href: "https://console.aws.amazon.com/ecs/home?region=eu-west-2#/clusters/test-app-staging/services/test-service/deployments")
       expect(page).not_to have_link("View revision")
@@ -143,12 +142,12 @@ feature "Users can see build information" do
 
       within(".stage-build") do
         expect(page).to have_content("Build the first part")
-        expect(page).to have_content("2019-07-03 16:09:04 +0100")
+        expect(page).to have_content("Wed, 03 Jul 2019 16:09:04 +0100")
         expect(page).to have_content("Succeeded")
         expect(page).to have_link("View in AWS", href: "https://console.aws.amazon.com/codebuild/home?region=eu-west-2#/builds/test-app-test-service-staging-codebuild:111/view/new")
 
         expect(page).to have_content("Build the second part")
-        expect(page).to have_content("2019-07-03 17:09:04 +0100")
+        expect(page).to have_content("Wed, 03 Jul 2019 17:09:04 +0100")
         expect(page).to have_content("Succeeded")
         expect(page).to have_link("View in AWS", href: "https://console.aws.amazon.com/codebuild/home?region=eu-west-2#/builds/test-app-test-service-staging-codebuild:222/view/new")
       end

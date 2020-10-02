@@ -3,8 +3,6 @@
 <%= render "shared/tabs", locals: { infrastructure: @infrastructure } %>
 
 <div class="col-12 col-md-12 pt-4">
-  <h1 class="mt-4 mb-4">Code Pipelines</h1>
-
   <% @pipelines.each do |pipeline| %>
     <h2 class="mt-4 mb-4"><%= pipeline.name %></h2>
 

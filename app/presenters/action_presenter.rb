@@ -14,7 +14,7 @@ class ActionPresenter < SimpleDelegator
   end
 
   def last_time
-    return latest_execution.last_status_change if latest_execution.present?
+    return I18n.l(latest_execution.last_status_change) if latest_execution.present?
     nil
   end
 
