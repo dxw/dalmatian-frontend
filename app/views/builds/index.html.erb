@@ -5,26 +5,25 @@
 <div class="col-12 col-md-12 pt-4">
   <h1 class="mt-4 mb-4">Code Pipelines</h1>
 
-  <% @pipeline_states.each do |pipeline_state| %>
-    <h2 class="mt-4 mb-4"><%= pipeline_state.pipeline_name %></h2>
+  <% @pipelines.each do |pipeline| %>
+    <h2 class="mt-4 mb-4"><%= pipeline.name %></h2>
 
     <div class="row">
-      <% pipeline_state.stage_states.each do |stage| %>
+      <% pipeline.stages.each do |stage| %>
         <div class="col-sm-12 col-md-6 col-lg-4">
-          <div class="card mb-4 stage-<%= stage.stage_name.downcase %>">
-            <h5 class="card-header"><%= stage.stage_name %></h5>
+          <div class="card mb-4 stage-<%= stage.name.downcase %>">
+            <h5 class="card-header"><%= stage.name %></h5>
             <div class="card-body">
               <h5 class="card-title">Actions</h5>
-              <% stage.action_states.each do |action| %>
-                <% external_url = action.latest_execution.try(:external_execution_url) %>
-                <div class="card mb-4" style="width: 18rem; mb-4">
+              <% stage.actions.each do |action| %>
+                <div class="card mb-4 build-card <%= action.card_class %>" style="width: 18rem; mb-4">
                   <div class="card-body">
-                    <h5 class="card-title"><%= action.action_name %></h5>
-                    <h6 class="card-subtitle mb-2 text-muted"><%= action.latest_execution.last_status_change %></h6>
-                    <p class="card-text"><%= action.latest_execution.status%></p>
-                    <p class="card-text"><%= action.latest_execution.summary %></p>
-                    <% if action.latest_execution.external_execution_url %>
-                      <%= link_to "View in AWS", action.latest_execution.external_execution_url, target: "_blank", class: "card-link" %>
+                    <h5 class="card-title"><%= action.name %></h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><%= action.last_time %></h6>
+                    <p class="card-text"><%= action.last_status %></p>
+                    <p class="card-text"><%= action.last_summary %></p>
+                    <% if action.last_external_execution_url %>
+                      <%= link_to "View in AWS", action.last_external_execution_url, target: "_blank", class: "card-link" %>
                     <% end %>
                     <% if action.revision_url %>
                       <%= link_to "View revision", action.revision_url, target: "_blank", class: "card-link" %>

@@ -4,7 +4,8 @@ class BuildsController < ApplicationController
   include AwsClientWrapper
   def index
     @infrastructure = Infrastructure.find(infrastructure_id)
-    @pipeline_states = FindBuildPipelines.new(infrastructure: @infrastructure).call
+    pipeline_states = FindBuildPipelines.new(infrastructure: @infrastructure).call
+    @pipelines = pipeline_states.map { |state| PipelinePresenter.new(state) }
   end
 
   private
