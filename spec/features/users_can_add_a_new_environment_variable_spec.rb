@@ -57,6 +57,8 @@ feature "Users can add new environment variables" do
 
     expect(page).to have_content("FOO")
     expect(page).to have_content("BAAZ")
+    expect(page).to have_content("This variable was successfully set")
+    expect(page).to have_content("To apply this change to the service you will need to execute a new deployment from the builds tab")
   end
 
   scenario "updates an existing variable" do

@@ -16,7 +16,10 @@ class InfrastructureVariablesController < ApplicationController
         infrastructure: @infrastructure,
         infrastructure_variable: @infrastructure_variable
       ).call
-      redirect_to infrastructure_variables_path(@infrastructure)
+      flash_message = {}
+      flash_message[:notice] = "This variable was successfully set"
+      flash_message[:danger] = "To apply this change to the service you will need to execute a new deployment from the builds tab"
+      redirect_to infrastructure_variables_path(@infrastructure), flash: flash_message
     else
       render :new
     end
