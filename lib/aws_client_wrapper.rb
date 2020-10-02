@@ -1,9 +1,5 @@
 module AwsClientWrapper
   class Client
-    def call
-      Aws::SSM::Client.new(credentials: role_credentials)
-    end
-
     private
 
     def aws_role
@@ -26,21 +22,43 @@ module AwsClientWrapper
     def core_aws_client
       @core_aws_client ||= Aws::STS::Client.new
     end
+
+    def core_aws_account_id
+      Aws::STS::Client.new.get_caller_identity.account
+    end
   end
 
-  class ClientForCoreAwsAccount < Client
+  class CodePipeline < Client
+    attr_accessor :infrastructure
+
+    def initialize(infrastructure:)
+      self.infrastructure = infrastructure
+    end
+
+    def call
+      Aws::CodePipeline::Client.new(credentials: role_credentials)
+    end
+
+    def role_arn
+      "arn:aws:iam::#{infrastructure.account_id}:role/#{aws_role}"
+    end
+  end
+
+  class SsmClient < Client
+    def call
+      Aws::SSM::Client.new(credentials: role_credentials)
+    end
+  end
+
+  class SSMClientForCoreAwsAccount < SsmClient
     include AwsClientWrapper
 
     private def role_arn
       "arn:aws:iam::#{core_aws_account_id}:role/#{aws_role}"
     end
-
-    private def core_aws_account_id
-      Aws::STS::Client.new.get_caller_identity.account
-    end
   end
 
-  class ClientForInfrastructureAwsAccount < Client
+  class SSMClientForInfrastructureAwsAccount < SsmClient
     include AwsClientWrapper
 
     attr_accessor :infrastructure

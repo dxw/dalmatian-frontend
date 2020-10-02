@@ -16,6 +16,6 @@ class DeleteInfrastructureVariable
   private
 
   def aws_ssm_client
-    ClientForCoreAwsAccount.new.call
+    SSMClientForCoreAwsAccount.new.call
   end
 end

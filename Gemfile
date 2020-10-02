@@ -4,7 +4,8 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "2.6.3"
 
-gem "aws-sdk-ssm"
+gem "aws-sdk-ssm", "~> 1.91"
+gem "aws-sdk-codepipeline", "~> 1.36.0"
 gem "bootsnap", ">= 1.1.0", require: false
 gem "bootstrap", ">= 4.3.1"
 gem "coffee-rails", "~> 5.0"

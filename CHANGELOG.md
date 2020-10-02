@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - secret environment variables can be shown and hidden individually by clicking the cell
 - infrastructure variables are shown for every infrastructure (not just those running on the core AWS account)
 - multiple environment variables can be added at once with a .env file
+- users can see build information in the form of AWS CodePipelines
 
 [unreleased]: TODO
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/
