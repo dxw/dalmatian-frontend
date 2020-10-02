@@ -16,12 +16,15 @@
             <div class="card-body">
               <h5 class="card-title">Actions</h5>
               <% stage.action_states.each do |action| %>
+                <% external_url = action.latest_execution.try(:external_execution_url) %>
                 <div class="card mb-4" style="width: 18rem; mb-4">
                   <div class="card-body">
                     <h5 class="card-title"><%= action.action_name %></h5>
                     <h6 class="card-subtitle mb-2 text-muted"><%= action.latest_execution.last_status_change %></h6>
                     <p class="card-text"><%= action.latest_execution.status%></p>
-                    <%= link_to "View in AWS", action.latest_execution.try(:external_execution_url), target: "_blank", class: "card-link" %>
+                    <% if external_url.present? %>
+                      <%= link_to "View in AWS", external_url, target: "_blank", class: "card-link" %>
+                    <% end %>
                   </div>
                 </div>
               <% end %>

@@ -73,6 +73,7 @@ feature "Users can see build information" do
       expect(page).to have_content("Source")
       expect(page).to have_content("2019-07-03 16:09:04 +0100")
       expect(page).to have_content("Succeeded")
+      expect(page).not_to have_link("View in AWS")
     end
 
     within(".stage-build") do
