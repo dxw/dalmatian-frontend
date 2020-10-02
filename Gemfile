@@ -25,7 +25,7 @@ gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
 gem "uglifier", ">= 1.3.0"
 
 group :development do
-  gem "better_errors"
+  gem "better_errors", "< 2.8.2"
   gem "listen", ">= 3.0.5", "< 3.3"
   gem "html2haml"
   gem "rails_layout"
