@@ -16,6 +16,6 @@ Rails.application.routes.draw do
       end
     end
     resources :infrastructure_variables, only: [:new, :create, :destroy, :index], as: :variables
-    resources :builds, only: [:index]
+    resources :builds, only: [:index, :new]
   end
 end

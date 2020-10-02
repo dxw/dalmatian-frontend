@@ -20,6 +20,7 @@ en:
     upload_env_file: "Upload ENV"
     apply: "Apply"
     continue: "Continue"
+    execute: "Execute"
   tab:
     configuration: "Configuration"
     environment_variables: "Environment variables"

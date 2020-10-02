@@ -4,9 +4,9 @@
 
 <div class="col-12 col-md-12 pt-4">
   <% @pipelines.each do |pipeline| %>
-    <h2 class="mt-4 mb-4"><%= pipeline.name %></h2>
-
-    <div class="row">
+    <h2 class="mb-4"><%= pipeline.name %></h2>
+    <%= link_to I18n.t("button.execute"), new_infrastructure_build_path(@infrastructure, pipeline: pipeline.name), class: "btn btn-success" %>
+    <div class="row mt-4">
       <% pipeline.stages.each do |stage| %>
         <div class="col-sm-12 col-md-6 col-lg-4">
           <div class="card mb-4 stage-<%= stage.name.downcase %>">

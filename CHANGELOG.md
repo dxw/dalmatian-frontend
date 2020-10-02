@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - infrastructure variables are shown for every infrastructure (not just those running on the core AWS account)
 - multiple environment variables can be added at once with a .env file
 - users can see build information in the form of AWS CodePipelines
+- users can execute new code pipeline runs to deploy apps
 
 [unreleased]: TODO
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/
