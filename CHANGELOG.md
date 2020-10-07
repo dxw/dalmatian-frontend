@@ -24,6 +24,8 @@ The format is based on [Keep a Changelog 1.0.0].
 - multiple environment variables can be added at once with a .env file
 - users can see build information in the form of AWS CodePipelines
 - users can execute new code pipeline runs to deploy apps
+- users can see the code pipeline for Dalmatian Core
+- users can execute a new pipeline run for Dalmatian Core
 
 [unreleased]: TODO
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/

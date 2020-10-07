@@ -1,10 +1,16 @@
-feature "Users can see build information" do
-  let(:infrastructure) { Infrastructure.create(identifier: "test-app", account_id: "345") }
+feature "Users can see Dalmatian Core build information" do
+  around do |example|
+    ClimateControl.modify DALMATIAN_CI_PIPELINE: "dalmatian-deploys", DALMATIAN_AWS_ACCOUNT_ID: "123" do
+      example.run
+    end
+  end
+
+  let(:infrastructure) { Infrastructure.create(identifier: "dalmatian-deploys", account_id: "123") }
   let(:aws_code_pipeline_client) { stub_aws_code_pipeline_client(account_id: infrastructure.account_id) }
 
   scenario "shows the code pipelines for that infrastructure's account id" do
     fake_pipeline_state = Aws::CodePipeline::Types::GetPipelineStateOutput.new(
-      pipeline_name: "test-app-test-service-staging-build-and-deploy",
+      pipeline_name: "dalmatian-deploys",
       stage_states: [
         Aws::CodePipeline::Types::StageState.new(
           stage_name: "Source",
@@ -56,18 +62,20 @@ feature "Users can see build information" do
       .and_return(Aws::CodePipeline::Types::ListPipelinesOutput.new(
         pipelines: [
           Aws::CodePipeline::Types::PipelineSummary.new(
-            name: "test-app-test-service-staging-build-and-deploy"
+            name: "dalmatian-deploys"
           )
         ]
       ))
 
     allow(aws_code_pipeline_client).to receive(:get_pipeline_state)
-      .with(name: "test-app-test-service-staging-build-and-deploy")
+      .with(name: "dalmatian-deploys")
       .and_return(fake_pipeline_state)
 
-    visit infrastructure_builds_path(infrastructure)
+    visit root_path
 
-    expect(page).to have_content("test-app")
+    click_on("Dalmatian Core")
+
+    expect(page).to have_content("dalmatian-deploys")
 
     within(".stage-source") do
       expect(page).to have_content("Source")
@@ -97,7 +105,7 @@ feature "Users can see build information" do
   context "when there are multiple actions for the same stage" do
     it "groups them in the same stage" do
       fake_pipeline_state = Aws::CodePipeline::Types::GetPipelineStateOutput.new(
-        pipeline_name: "test-app-test-service-staging-build-and-deploy",
+        pipeline_name: "dalmatian-deploys",
         stage_states: [
           Aws::CodePipeline::Types::StageState.new(
             stage_name: "Build",
@@ -129,16 +137,16 @@ feature "Users can see build information" do
         .and_return(Aws::CodePipeline::Types::ListPipelinesOutput.new(
           pipelines: [
             Aws::CodePipeline::Types::PipelineSummary.new(
-              name: "test-app-test-service-staging-build-and-deploy"
+              name: "dalmatian-deploys"
             )
           ]
         ))
 
       allow(aws_code_pipeline_client).to receive(:get_pipeline_state)
-        .with(name: "test-app-test-service-staging-build-and-deploy")
+        .with(name: "dalmatian-deploys")
         .and_return(fake_pipeline_state)
 
-      visit infrastructure_builds_path(infrastructure)
+      visit dalmatian_builds_path
 
       within(".stage-build") do
         expect(page).to have_content("Build the first part")
@@ -155,7 +163,7 @@ feature "Users can see build information" do
   end
 
   context "when the pipeline name doesn't include the infrastructure name" do
-    let(:infrastructure) { Infrastructure.create(identifier: "relevant-app", account_id: "345") }
+    let(:infrastructure) { Infrastructure.create(identifier: "relevant-app", account_id: "123") }
 
     it "is not included as a pipeline to the user" do
       allow(aws_code_pipeline_client).to receive(:list_pipelines)
@@ -194,7 +202,7 @@ feature "Users can see build information" do
         .with(name: "relevant-app")
         .and_return(fake_pipeline_state)
 
-      visit infrastructure_builds_path(infrastructure)
+      visit dalmatian_builds_path
 
       expect(aws_code_pipeline_client).not_to receive(:get_pipeline_state)
         .with(name: "another-non-matching-name")

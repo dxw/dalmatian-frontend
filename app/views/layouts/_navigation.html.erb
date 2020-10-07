@@ -5,8 +5,11 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarCollapse">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+      <li class="nav-item <%= active_link(path: infrastructures_path) %> <%= active_link(path: root_path) %>">
         <%= link_to "Infrastructures", infrastructures_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item <%= active_link(path: dalmatian_builds_path) %>">
+        <%= link_to "Dalmatian Core", dalmatian_builds_path, class: "nav-link" %>
       </li>
     </ul>
   </div>

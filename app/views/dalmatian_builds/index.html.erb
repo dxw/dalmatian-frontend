@@ -1,0 +1,8 @@
+<h1 class="mt-4 mb-4">Dalmatian core builds</h1>
+
+<div class="col-12 col-md-12 pt-4">
+  <% @pipelines.each do |pipeline| %>
+    <h2 class="mb-4"><%= pipeline.name %></h2>
+    <%= render "shared/pipeline_build_cards", locals: { pipeline: pipeline, infrastructure: @core_infrastructure } %>
+  <% end %>
+</div>
