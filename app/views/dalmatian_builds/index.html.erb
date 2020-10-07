@@ -3,6 +3,7 @@
 <div class="col-12 col-md-12 pt-4">
   <% @pipelines.each do |pipeline| %>
     <h2 class="mb-4"><%= pipeline.name %></h2>
+    <%= link_to I18n.t("button.execute"), new_dalmatian_build_path(pipeline: pipeline.name), class: "btn btn-success" %>
     <%= render "shared/pipeline_build_cards", locals: { pipeline: pipeline, infrastructure: @core_infrastructure } %>
   <% end %>
 </div>
