@@ -24,7 +24,7 @@ module AwsClientWrapper
     end
 
     def core_aws_account_id
-      Aws::STS::Client.new.get_caller_identity.account
+      ENV["DALMATIAN_AWS_ACCOUNT_ID"]
     end
   end
 

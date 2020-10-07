@@ -1,6 +1,4 @@
 module AwsApiHelpers
-  CORE_AWS_ACCOUNT_ID = "0011122233344".freeze
-
   def create_aws_environment_variable(name:, value:)
     Aws::SSM::Types::Parameter.new(
       name: name,
@@ -35,7 +33,7 @@ module AwsApiHelpers
   )
     aws_ssm_client ||= stub_aws_ssm_client(
       aws_sts_client: stub_main_aws_sts_client,
-      account_id: CORE_AWS_ACCOUNT_ID
+      account_id: ENV["DALMATIAN_AWS_ACCOUNT_ID"]
     )
     request_path = "/dalmatian-variables/infrastructures/#{service_name}/#{environment_name}/"
 
@@ -138,7 +136,7 @@ module AwsApiHelpers
     allow(Aws::STS::Client).to receive(:new).and_return(aws_sts_client)
     allow(aws_sts_client)
       .to receive_message_chain(:get_caller_identity, :account)
-      .and_return(CORE_AWS_ACCOUNT_ID)
+      .and_return(ENV["DALMATIAN_AWS_ACCOUNT_ID"])
     aws_sts_client
   end
 

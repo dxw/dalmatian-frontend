@@ -1,4 +1,4 @@
-feature "Users can start a deployment" do
+feature "Users can start a deployment for a given infrastructure" do
   let(:infrastructure) { Infrastructure.create(identifier: "test-app", account_id: "345") }
   let(:aws_code_pipeline_client) { stub_aws_code_pipeline_client(account_id: infrastructure.account_id) }
 

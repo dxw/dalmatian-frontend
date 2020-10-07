@@ -7,7 +7,7 @@ feature "Users can delete infrastructure variables" do
       environments: {"staging" => []}
     )
   end
-  let(:aws_ssm_client) { stub_aws_ssm_client(aws_sts_client: stub_main_aws_sts_client, account_id: AwsApiHelpers::CORE_AWS_ACCOUNT_ID) }
+  let(:aws_ssm_client) { stub_aws_ssm_client(aws_sts_client: stub_main_aws_sts_client, account_id: ENV["DALMATIAN_AWS_ACCOUNT_ID"]) }
 
   scenario "delete a single variable", js: true do
     existing_environment_variable = create_aws_environment_variable(name: "EXISTING_VARIABLE_NAME", value: "EXISTING_VARIABLE_VALUE")
