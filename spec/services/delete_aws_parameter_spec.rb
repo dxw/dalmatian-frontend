@@ -2,7 +2,7 @@ require "rails_helper"
 
 RSpec.describe DeleteAwsParameter do
   describe "#call" do
-    let(:aws_ssm_client) { stub_aws_ssm_client(account_id: AwsApiHelpers::CORE_AWS_ACCOUNT_ID) }
+    let(:aws_ssm_client) { stub_aws_ssm_client(account_id: ENV["DALMATIAN_AWS_ACCOUNT_ID"]) }
 
     it "returns an object with the new parameter version number" do
       infrastructure = Infrastructure.new(account_id: "345")
