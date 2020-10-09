@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - users can see the code pipeline for Dalmatian Core
 - users can execute a new pipeline run for Dalmatian Core
 - DALMATIAN_AWS_ACCOUNT_ID automatically set on server start if absent
+- DALMATIAN_CI_PIPELINE automatically set on server start if absent
 
 [unreleased]: TODO
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/
