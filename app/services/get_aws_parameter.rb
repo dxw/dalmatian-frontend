@@ -7,12 +7,14 @@ class GetAwsParameter
   end
 
   def call
-    parameters = aws_ssm_client.get_parameters_by_path(
+    parameters = []
+    aws_ssm_client.get_parameters_by_path(
       path: path,
       with_decryption: true,
       recursive: false
-    ).parameters
-
+    ).each do |response|
+      parameters.concat response.parameters
+    end
     parameters.each { |p| p.name = File.basename(p.name) }
   end
 end

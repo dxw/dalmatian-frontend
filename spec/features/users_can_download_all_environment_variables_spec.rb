@@ -7,10 +7,10 @@ feature "Users can download environment variables" do
       environments: {"staging" => []}
     )
 
-    fake_environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(parameters: [
+    fake_environment_variables = [Aws::SSM::Types::GetParametersByPathResult.new(parameters: [
       create_aws_environment_variable(name: "FOO", value: "BAR"),
       create_aws_environment_variable(name: "DATABASE_URL", value: "BAZ")
-    ])
+    ])]
 
     stub_call_to_aws_for_environment_variables(
       account_id: infrastructure.account_id,

@@ -17,9 +17,9 @@ feature "Users can show and hide secret variables" do
 
     scenario "values are hidden by default" do
       environment_variable = create_aws_environment_variable(name: "FOO", value: "BAAZ")
-      environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(
+      environment_variables = [Aws::SSM::Types::GetParametersByPathResult.new(
         parameters: [environment_variable]
-      )
+      )]
 
       stub_call_to_aws_for_environment_variables(
         account_id: infrastructure.account_id,
@@ -37,9 +37,9 @@ feature "Users can show and hide secret variables" do
 
     scenario "values can be shown by clicking", js: true do
       environment_variable = create_aws_environment_variable(name: "FOO", value: "BAAZ")
-      environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(
+      environment_variables = [Aws::SSM::Types::GetParametersByPathResult.new(
         parameters: [environment_variable]
-      )
+      )]
 
       stub_call_to_aws_for_environment_variables(
         account_id: infrastructure.account_id,
@@ -71,9 +71,9 @@ feature "Users can show and hide secret variables" do
 
     scenario "values are shown by default" do
       environment_variable = create_aws_environment_variable(name: "FOO", value: "BAAZ")
-      environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(
+      environment_variables = [Aws::SSM::Types::GetParametersByPathResult.new(
         parameters: [environment_variable]
-      )
+      )]
 
       stub_call_to_aws_for_environment_variables(
         account_id: infrastructure.account_id,

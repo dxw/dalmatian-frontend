@@ -17,9 +17,9 @@ RSpec.describe FindInfrastructureVariables do
       )
 
       fake_environment_variable = create_aws_environment_variable(name: "FOO", value: "BAR")
-      fake_environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(
+      fake_environment_variables = [Aws::SSM::Types::GetParametersByPathResult.new(
         parameters: [fake_environment_variable]
-      )
+      )]
 
       stub_call_to_aws_for_infrastructure_variables(
         service_name: "test",
@@ -46,9 +46,9 @@ RSpec.describe FindInfrastructureVariables do
         )
 
         fake_environment_variable = create_aws_environment_variable(name: "FOO", value: "BAR")
-        fake_environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(
+        fake_environment_variables = [Aws::SSM::Types::GetParametersByPathResult.new(
           parameters: [fake_environment_variable]
-        )
+        )]
 
         stub_call_to_aws_for_infrastructure_variables(
           aws_ssm_client: aws_ssm_client,
