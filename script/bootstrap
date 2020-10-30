@@ -53,7 +53,7 @@ if [ -z "$CI" ]; then
 
   if ! bundle check >/dev/null 2>&1; then
     echo "==> Installing Ruby dependencies..."
-    bundle config set path vendor/bundle
+    bundle config set --local path vendor/bundle
     bundle install
   fi
 
