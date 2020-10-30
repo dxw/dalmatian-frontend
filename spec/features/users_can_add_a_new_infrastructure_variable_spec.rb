@@ -18,7 +18,7 @@ feature "Users can add new infrastructure variables" do
       aws_ssm_client: aws_ssm_client,
       service_name: "test-app",
       environment_name: "staging",
-      environment_variables: Aws::SSM::Types::GetParametersByPathResult.new(parameters: [])
+      environment_variables: [Aws::SSM::Types::GetParametersByPathResult.new(parameters: [])]
     )
 
     visit infrastructure_path(infrastructure)
@@ -39,9 +39,9 @@ feature "Users can add new infrastructure variables" do
     )
 
     updated_environment_variable = create_aws_environment_variable(name: "FOO", value: "BAAZ")
-    updated_environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(
+    updated_environment_variables = [Aws::SSM::Types::GetParametersByPathResult.new(
       parameters: [updated_environment_variable]
-    )
+    )]
 
     stub_call_to_aws_for_infrastructure_variables(
       aws_ssm_client: aws_ssm_client,
@@ -69,9 +69,9 @@ feature "Users can add new infrastructure variables" do
     )
 
     existing_environment_variable = create_aws_environment_variable(name: "EXISTING_VARIABLE_NAME", value: "EXISTING_VARIABLE_VALUE")
-    existing_environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(
+    existing_environment_variables = [Aws::SSM::Types::GetParametersByPathResult.new(
       parameters: [existing_environment_variable]
-    )
+    )]
 
     stub_call_to_aws_for_infrastructure_variables(
       aws_ssm_client: aws_ssm_client,
@@ -102,9 +102,9 @@ feature "Users can add new infrastructure variables" do
     )
 
     updated_environment_variable = create_aws_environment_variable(name: "EXISTING_VARIABLE_NAME", value: "NEW_VALUE")
-    updated_environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(
+    updated_environment_variables = [Aws::SSM::Types::GetParametersByPathResult.new(
       parameters: [updated_environment_variable]
-    )
+    )]
 
     stub_call_to_aws_for_infrastructure_variables(
       aws_ssm_client: aws_ssm_client,

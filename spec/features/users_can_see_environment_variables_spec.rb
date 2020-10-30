@@ -8,9 +8,9 @@ feature "Users can see environment variables" do
     )
 
     fake_environment_variable = create_aws_environment_variable(name: "FOO", value: "BAR")
-    fake_environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(parameters: [
+    fake_environment_variables = [Aws::SSM::Types::GetParametersByPathResult.new(parameters: [
       fake_environment_variable
-    ])
+    ])]
 
     stub_call_to_aws_for_environment_variables(
       account_id: infrastructure.account_id,

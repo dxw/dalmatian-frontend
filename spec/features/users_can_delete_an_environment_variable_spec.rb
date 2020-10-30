@@ -11,9 +11,9 @@ feature "Users can delete environment variables" do
 
   scenario "delete a single variable", js: true do
     existing_environment_variable = create_aws_environment_variable(name: "EXISTING_VARIABLE_NAME", value: "EXISTING_VARIABLE_VALUE")
-    existing_environment_variables = Aws::SSM::Types::GetParametersByPathResult.new(
+    existing_environment_variables = [Aws::SSM::Types::GetParametersByPathResult.new(
       parameters: [existing_environment_variable]
-    )
+    )]
 
     stub_call_to_aws_for_environment_variables(
       aws_ssm_client: aws_ssm_client,
@@ -41,7 +41,7 @@ feature "Users can delete environment variables" do
       infrastructure_name: infrastructure.identifier,
       service_name: "test-service",
       environment_name: "staging",
-      environment_variables: Aws::SSM::Types::GetParametersByPathResult.new(parameters: [])
+      environment_variables: [Aws::SSM::Types::GetParametersByPathResult.new(parameters: [])]
     )
 
     click_on(I18n.t("button.delete"))
