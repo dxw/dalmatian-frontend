@@ -26,8 +26,15 @@ en:
     environment_variables: "Environment variables"
     infrastructure_variables: "Infrastructure variables"
     logs: "Builds"
+    databases: "Databases"
   alerts:
     introduction_warning:
       short: "Use with caution."
       long: "This tool authenticates with your machines real AWS credentials. Despite being run locally, any action performed here will make real requests to AWS which may affect live services."
   obfuscation: "************************************"
+  database:
+    connect:
+      step:
+        1: "Install Dalmatian Tools on your machine"
+        2: "Install AWS Session Manager on your machine"
+        3: "Copy and paste the below command into your terminal to connect directly to that RDS instance"

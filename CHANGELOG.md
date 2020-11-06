@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog 1.0.0].
 - users can execute a new pipeline run for Dalmatian Core
 - DALMATIAN_AWS_ACCOUNT_ID automatically set on server start if absent
 - DALMATIAN_CI_PIPELINE automatically set on server start if absent
+- users can see how to connect directly to each RDS instance
 
 [unreleased]: TODO
 [keep a changelog 1.0.0]: https://keepachangelog.com/en/1.0.0/

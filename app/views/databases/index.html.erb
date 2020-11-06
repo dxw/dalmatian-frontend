@@ -1,0 +1,36 @@
+<h1 class="mt-4 mb-4"><%= @infrastructure.identifier %></h1>
+
+<%= render "shared/tabs", locals: { infrastructure: @infrastructure } %>
+
+<div class="col-6 col-md-6 pt-4">
+  <h3>Information</h3>
+  <% @databases.each do |rds| %>
+    <dl>
+      <h2 class="mb-4"></h2>
+        <dt>Identifier</dt>
+        <dd><%= rds.identifier %></dd>
+        <dt>Name</dt>
+        <dd><%= rds.name %></dd>
+        <dt>Engine</dt>
+        <dd><%= rds.engine %></dd>
+        <dt>Engine version</dt>
+        <dd><%= rds.engine_version %></dd>
+        <dt>Instance class</dt>
+        <dd><%= rds.instance_class %></dd>
+    </dl>
+
+    <h3>Connect to this instance</h3>
+    <ol id="connect-steps">
+      <li><a href="https://github.com/dxw/dalmatian-tools/"><%= I18n.t("database.connect.step.1") %></a></li>
+      <li><a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html#install-plugin-macos"><%= I18n.t("database.connect.step.2") %></a></li>
+      <li><%= I18n.t("database.connect.step.3") %></li>
+    </ol
+
+    <% @infrastructure.environment_names.each do |environment_name| %>
+      <h4><%= environment_name.capitalize %></h4>
+      <pre id="<%= environment_name %>-snippet"><code>
+        <%= "dalmatian rds shell -i #{@infrastructure.identifier} -e #{environment_name} -r #{rds.identifier}" %>
+      </code></pre>
+    <% end %>
+  <% end %>
+</div>
