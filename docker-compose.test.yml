@@ -18,7 +18,7 @@ services:
       - mongodb
     command: /bin/sh -c "./script/test"
     volumes:
-      - ./coverage:/srv/app/coverage
+      - .:/srv/app
 
   mongodb:
     image: mongo:4.4
