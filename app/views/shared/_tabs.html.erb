@@ -11,4 +11,7 @@
   <li class="nav-item">
     <%= link_to I18n.t("tab.logs"), infrastructure_builds_path(@infrastructure), class: "nav-link #{active_link(path: infrastructure_builds_path(@infrastructure))}" %>
   </li>
+  <li class="nav-item">
+    <%= link_to I18n.t("tab.databases"), infrastructure_databases_path(@infrastructure), class: "nav-link #{active_link(path: infrastructure_databases_path(@infrastructure))}" %>
+  </li>
 </ul>
