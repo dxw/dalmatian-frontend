@@ -42,7 +42,7 @@ group :test do
   gem "launchy"
   gem "geckodriver-helper"
   gem "selenium-webdriver"
-  gem "simplecov", "~> 0.19"
+  gem "simplecov", "~> 0.21"
   gem "simplecov-lcov"
 end
 
