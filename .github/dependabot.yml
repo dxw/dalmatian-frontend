@@ -1,0 +1,35 @@
+version: 2
+updates:
+- package-ecosystem: bundler
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "09:00"
+    timezone: Etc/Greenwich
+  ignore:
+  - dependency-name: aws-sdk-ssm
+    versions:
+    - 1.103.0
+    - 1.104.0
+    - 1.105.0
+    - 1.106.0
+    - 1.107.0
+  - dependency-name: listen
+    versions:
+    - 3.4.1
+    - 3.5.0
+  - dependency-name: aws-sdk-codepipeline
+    versions:
+    - 1.39.0
+    - 1.40.0
+    - 1.41.0
+    - 1.42.0
+    - 1.43.0
+  - dependency-name: standard
+    versions:
+    - 0.11.0
+    - 0.12.0
+    - 0.13.0
+    - 1.0.0
+    - 1.0.1
+    - 1.0.4
