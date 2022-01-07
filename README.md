@@ -13,7 +13,7 @@ Once a member of the ops team has created you an AWS user on Dalmatian you shoul
 **Every 12 hours** you will need to renew your local MFA token by following these instructions before starting the server:
 
 ```bash
-$ bin/dalmatian-mfa -m <an active AWS 2FA token for your AWS login>
+$ bin/dalmatian-mfa -p dalmatian-admin -m <an active AWS 2FA token for your AWS login>
 ```
 
 ## Getting started
@@ -45,11 +45,13 @@ script/console
 ## Static code analysis
 
 Run [Brakeman](https://brakemanscanner.org/) to highlight any security vulnerabilities:
+
 ```bash
 brakeman
 ```
 
 To pipe the results to a file:
+
 ```bash
 brakeman -o report.text
 ```
