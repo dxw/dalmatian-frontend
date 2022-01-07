@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog 1.0.0].
 
 ## [Unreleased]
 
+- app requires Dalmatian Tools for authenticating with AWS
 - all infrastructures are listed
 - individual infrastructures can be viewed
 - fetch and display environment variables for each service from AWS ParameterStore

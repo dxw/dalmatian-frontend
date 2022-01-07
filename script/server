@@ -7,123 +7,25 @@ set -e
 
 cd "$(dirname "$0")/.."
 
+if ! [ "$(command -v dalmatian)" ]
+then
+  echo "Warning: Dalmtian Tools are not installed"
+  echo "         To authenticate with AWS it is required to install and run"
+  echo "         \`dalmatian login\` rather than managing the AWS credentials"
+  echo "         Install from: https://github.com/dxw/dalmatian-tools"
+  exit 1
+fi
+
 echo "==> Updating..."
 script/update
 
 AWS_PROFILE=${AWS_PROFILE:-dalmatian-admin}
 
-if [ "$(command -v dalmatian)" ]
-then
-  if [ -L "$(command -v dalmatian)" ]
-  then
-    DALMATIAN_TOOLS_APP_ROOT="$(dirname "$(dirname "$(readlink "$(command -v dalmatian)")")")"
-  else
-    DALMATIAN_TOOLS_APP_ROOT="$(dirname "$(dirname "$(command -v dalmatian)")")"
-  fi
-  DALMATIAN_CONFIG_STORE="$HOME/.config/dalmatian"
-  DALMATIAN_CONFIG_FILE="$DALMATIAN_CONFIG_STORE/config.json"
-  DALMATIAN_CREDENTIALS_FILE="$DALMATIAN_CONFIG_STORE/credentials.json.enc"
-  DALMATIAN_MFA_CREDENTIALS_FILE="$DALMATIAN_CONFIG_STORE/mfa_credentials.json"
-  DALMATIAN_ASSUME_MAIN_ROLE_CREDENTIALS_FILE="$DALMATIAN_CONFIG_STORE/assume_role_credentials.json"
-  DALMATIAN_CONFIG_JSON_STRING=$(cat "$DALMATIAN_CONFIG_FILE")
-  DALMATIAN_ACCOUNT_ID=$(echo "$DALMATIAN_CONFIG_JSON_STRING" | jq -r '.account_id')
-  DALMATIAN_ROLE=$(echo "$DALMATIAN_CONFIG_JSON_STRING" | jq -r '.dalmatian_role')
-  MFA_CONFIGURED=0
-
-  if [ ! -f "$DALMATIAN_CONFIG_FILE" ]
-  then
-    echo "Warning: You are not logged into Dalmatian"
-    echo "         CTRL^C and use \`dalmatian login\` instead"
-    echo "         Continuing with AWS credentials..."
-  else
-    # If MFA credentials exist, check if they have expired
-    if [ -f "$DALMATIAN_MFA_CREDENTIALS_FILE" ]
-    then
-      DALMATIAN_MFA_CREDENTIALS_JSON_STRING="$(cat "$DALMATIAN_MFA_CREDENTIALS_FILE")"
-      DALMATIAN_MFA_EXPIRATION=$(echo "$DALMATIAN_MFA_CREDENTIALS_JSON_STRING" | jq -r '.aws_session_expiration')
-      DALMATIAN_MFA_EXPIRATION_SECONDS=$(date -j -f "%F T %T %z" "$DALMATIAN_MFA_EXPIRATION" +"%s")
-      EPOCH=$(date +%s)
-      if [ "$DALMATIAN_MFA_EXPIRATION_SECONDS" -lt "$EPOCH" ]
-      then
-        echo "==> MFA credentials expired, requesting new credentials ..."
-      else
-        MFA_CONFIGURED=1
-      fi
-    fi
-
-    # Update MFA credentials if needed
-    if [ "$MFA_CONFIGURED" = "0" ]
-    then
-      DALMATIAN_CREDENTIALS_JSON_STRING=$(
-        gpg --decrypt \
-          --quiet \
-          < "$DALMATIAN_CREDENTIALS_FILE"
-      )
-
-      AWS_ACCESS_KEY_ID="$(echo "$DALMATIAN_CREDENTIALS_JSON_STRING" | jq -r '.aws_access_key_id')"
-      AWS_SECRET_ACCESS_KEY="$(echo "$DALMATIAN_CREDENTIALS_JSON_STRING" | jq -r '.aws_secret_access_key')"
-      AWS_MFA_SECRET="$(echo "$DALMATIAN_CREDENTIALS_JSON_STRING" | jq -r '.aws_mfa_secret')"
-      export AWS_ACCESS_KEY_ID
-      export AWS_SECRET_ACCESS_KEY
-      MFA_CODE="$(oathtool --base32 --totp "$AWS_MFA_SECRET")"
-      "$DALMATIAN_TOOLS_APP_ROOT/bin/aws/mfa" -m "$MFA_CODE"
-    fi
-
-    DALMATIAN_MFA_CREDENTIALS_JSON_STRING="$(cat "$DALMATIAN_MFA_CREDENTIALS_FILE")"
-
-    AWS_ACCESS_KEY_ID=$(echo "$DALMATIAN_MFA_CREDENTIALS_JSON_STRING" | jq -r '.aws_access_key_id')
-    AWS_SECRET_ACCESS_KEY=$(echo "$DALMATIAN_MFA_CREDENTIALS_JSON_STRING" | jq -r '.aws_secret_access_key')
-    AWS_SESSION_TOKEN=$(echo "$DALMATIAN_MFA_CREDENTIALS_JSON_STRING" | jq -r '.aws_session_token')
-
-    export AWS_ACCESS_KEY_ID
-    export AWS_SECRET_ACCESS_KEY
-    export AWS_SESSION_TOKEN
-
-    echo "==> Requesting Assume Role credentials for main Dalmatian account ..."
-    ASSUME_ROLE_RESULT=$(
-      aws sts assume-role \
-      --role-arn "arn:aws:iam::$DALMATIAN_ACCOUNT_ID:role/$DALMATIAN_ROLE" \
-      --role-session-name dalmatian-tools
-    )
-    AWS_ACCESS_KEY_ID=$(echo "$ASSUME_ROLE_RESULT" | jq -r '.Credentials.AccessKeyId')
-    AWS_SECRET_ACCESS_KEY=$(echo "$ASSUME_ROLE_RESULT" | jq -r '.Credentials.SecretAccessKey')
-    AWS_SESSION_TOKEN=$(echo "$ASSUME_ROLE_RESULT" | jq -r '.Credentials.SessionToken')
-
-    export AWS_ACCESS_KEY_ID
-    export AWS_SECRET_ACCESS_KEY
-    export AWS_SESSION_TOKEN
-
-    AWS_SESSION_EXPIRATION=$(echo "$ASSUME_ROLE_RESULT" | jq -r '.Credentials.Expiration' | awk -F':' -v OFS=':' '{ print $1, $2, $3$4 }')
-    DALMATIAN_ASSUME_MAIN_ROLE_CREDENTIALS_JSON_STRING=$(
-      jq -n \
-      --arg aws_access_key_id "$AWS_ACCESS_KEY_ID" \
-      --arg aws_secret_access_key "$AWS_SECRET_ACCESS_KEY" \
-      --arg aws_session_token "$AWS_SESSION_TOKEN" \
-      --arg aws_session_expiration "$AWS_SESSION_EXPIRATION" \
-      '{
-        aws_access_key_id: $aws_access_key_id,
-        aws_secret_access_key: $aws_secret_access_key,
-        aws_session_token: $aws_session_token,
-        aws_session_expiration: $aws_session_expiration
-      }'
-    )
-
-    echo "$DALMATIAN_ASSUME_MAIN_ROLE_CREDENTIALS_JSON_STRING" > "$DALMATIAN_ASSUME_MAIN_ROLE_CREDENTIALS_FILE"
-  fi
-else
-  echo "Warning: Dalmtian Tools are not installed"
-  echo "         It is recommended to install this and run \`dalmatian login\`"
-  echo "         rather than managing the AWS credentials"
-  echo "         Install from: https://github.com/dxw/dalmatian-tools"
-  echo "         Continuing with AWS credentials ..."
-  export AWS_PROFILE
-fi
-
 echo "==> Finding Dalmatian config..."
-CI_PIPELINE=$(aws codepipeline get-pipeline --name ci-terraform-build-pipeline)
+CI_PIPELINE=$(dalmatian aws exec -i test-app codepipeline get-pipeline --name ci-terraform-build-pipeline | sed '/==>/d')
 CI_BUILD_PROJECT_NAME=$(echo "$CI_PIPELINE" | jq -r '.pipeline.stages[] | select(.name == "Build") | .actions[] | select(.name == "Build-ci") | .configuration.ProjectName')
 
-BUILD_PROJECTS=$(aws codebuild batch-get-projects --names "$CI_BUILD_PROJECT_NAME")
+BUILD_PROJECTS=$(dalmatian aws exec -i test-app codebuild batch-get-projects --names "$CI_BUILD_PROJECT_NAME" | sed '/==>/d')
 DALMATIAN_CONFIG_REPO=$(echo "$BUILD_PROJECTS" | jq -r '.projects[0].environment.environmentVariables[] | select(.name == "dalmatian_config_repo") | .value')
 
 echo "==> Fetching Dalmatian config..."
@@ -132,7 +34,7 @@ rm -rf tmp/dalmatian-config
 git clone "$DALMATIAN_CONFIG_REPO" tmp/dalmatian-config
 
 echo "==> Populating the MongoDB with Dalmatian config..."
-bundle exec rake populate_database
+dalmatian util exec -i test-app bundle exec rake populate_database
 
 echo "==> Starting the development server..."
-bundle exec rails server
+dalmatian util exec -i test-app bundle exec rails server
