@@ -119,7 +119,8 @@ module AwsApiHelpers
     allow(Aws::AssumeRoleCredentials).to receive(:new).with(
       client: aws_sts_client,
       role_arn: "arn:aws:iam::#{account_id}:role/#{ENV["AWS_ROLE"]}",
-      role_session_name: "role_session_name"
+      role_session_name: "role_session_name",
+      external_id: "dalmatian-tools"
     ).and_return(credentials)
 
     aws_ssm_client = instance_double(Aws::SSM::Client)
@@ -145,7 +146,8 @@ module AwsApiHelpers
     allow(Aws::AssumeRoleCredentials).to receive(:new).with(
       client: stub_aws_sts_client,
       role_arn: "arn:aws:iam::#{infrastructure.account_id}:role/#{ENV["AWS_ROLE"]}",
-      role_session_name: "role_session_name"
+      role_session_name: "role_session_name",
+      external_id: "dalmatian-tools"
     ).and_return(credentials)
 
     aws_code_pipeline_client = instance_double(Aws::CodePipeline::Client)

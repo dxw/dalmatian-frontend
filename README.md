@@ -8,13 +8,9 @@ Due to risks associated with the high level of access, this service is designed 
 
 ## Prerequisites
 
-Once a member of the ops team has created you an AWS user on Dalmatian you should be able to [follow these instructions to set your machine up with AWS permissions](https://github.com/dxw/dalmatian-developer-docs/blob/master/setting-up-aws-credentials-on-your-local-environment.md). Ensure you have a local `AWS_PROFILE` named `dalmatian-admin`.
-
-**Every 12 hours** you will need to renew your local MFA token by following these instructions before starting the server:
-
-```bash
-$ bin/dalmatian-mfa -m <an active AWS 2FA token for your AWS login>
-```
+This application depends on [Dalmatian
+tools](https://github.com/dxw/dalmatian-tools#installation) being installed and
+used to login into AWS via `dalmatian login`.
 
 ## Getting started
 
@@ -45,11 +41,13 @@ script/console
 ## Static code analysis
 
 Run [Brakeman](https://brakemanscanner.org/) to highlight any security vulnerabilities:
+
 ```bash
 brakeman
 ```
 
 To pipe the results to a file:
+
 ```bash
 brakeman -o report.text
 ```

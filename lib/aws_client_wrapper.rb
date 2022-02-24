@@ -15,7 +15,8 @@ module AwsClientWrapper
       @role_credentials ||= Aws::AssumeRoleCredentials.new(
         client: core_aws_client,
         role_arn: role_arn,
-        role_session_name: role_session_name
+        role_session_name: role_session_name,
+        external_id: "dalmatian-tools"
       )
     end
 
