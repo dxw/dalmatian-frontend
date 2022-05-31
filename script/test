@@ -23,13 +23,8 @@ else
   echo "==> Running ShellCheck..."
   shellcheck script/*
 
-  if [ -n "$CI" ]; then
-    echo "==> Linting Ruby..."
-    bundle exec standardrb
-  else
-    echo "==> Linting Ruby in fix mode..."
-    bundle exec standardrb --fix
-  fi
+  echo "==> Linting Ruby..."
+  bundle exec standardrb
 
   echo "==> Running the tests..."
   bundle exec rspec
