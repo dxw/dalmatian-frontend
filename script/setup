@@ -21,23 +21,7 @@ if [ ! -f .env.development.local ]; then
 fi
 
 echo "==> Dropping database..."
-set +e
 bundle exec rails db:drop
-DB_DROP_RESULT=$?
-set -e
-
-if [ -z "$CI" ] && [ -n "$DB_DROP_RESULT" ]; then
-  printf "\\nDatabase drop failed. Continue anyway? [y/N] "
-  read -r
-
-  case $REPLY in
-    y | Y)
-      ;;
-    *)
-      exit 1
-      ;;
-  esac
-fi
 
 echo "==> Starting Mongo database..."
 brew services start mongodb-community@4.4
