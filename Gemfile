@@ -7,7 +7,7 @@ ruby "2.6.3"
 gem "aws-sdk-ssm", "~> 1.114"
 gem "aws-sdk-codepipeline", "~> 1.38.0"
 gem "bootsnap", ">= 1.1.0", require: false
-gem "bootstrap", ">= 4.3.1"
+gem "bootstrap", ">= 4.3.1", "< 5.0"
 gem "coffee-rails", "~> 5.0"
 gem "haml-rails"
 gem "high_voltage"
