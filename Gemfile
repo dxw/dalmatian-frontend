@@ -41,7 +41,7 @@ group :test do
   gem "database_cleaner-mongoid"
   gem "launchy"
   gem "geckodriver-helper"
-  gem "selenium-webdriver"
+  gem "webdrivers", "~> 5.0"
   gem "simplecov", "~> 0.21"
   gem "simplecov-lcov"
 end
