@@ -412,7 +412,7 @@ DEPENDENCIES
   webdrivers (~> 5.0)
 
 RUBY VERSION
-   ruby 2.6.10p210
+   ruby 2.7.6p210
 
 BUNDLED WITH
    2.3.14

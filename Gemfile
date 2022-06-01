@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-ruby "2.6.10"
+ruby "2.7.6"
 
 gem "aws-sdk-ssm", "~> 1.114"
 gem "aws-sdk-codepipeline", "~> 1.38.0"
