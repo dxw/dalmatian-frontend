@@ -3,6 +3,7 @@ services:
   web:
     build:
       context: .
+      target: test
       args:
         RAILS_ENV: test
     image: thedxw/dalmatian-frontend
@@ -10,6 +11,7 @@ services:
       DATABASE_URL: 'mongodb://mongodb:27017/dalmatian-frontend-test'
       DATABASE_CLEANER_ALLOW_REMOTE_DATABASE_URL: "true"
       CI: "true"
+      SECRET_KEY_BASE: secret
     env_file:
       - .env.test
     networks:

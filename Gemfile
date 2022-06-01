@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-ruby "2.6.3"
+ruby "2.7.6"
 
 gem "aws-sdk-ssm", "~> 1.114"
 gem "aws-sdk-codepipeline", "~> 1.38.0"
@@ -38,10 +38,10 @@ end
 group :test do
   gem "capybara", ">= 2.15"
   gem "climate_control"
-  gem "database_cleaner"
+  gem "database_cleaner-mongoid"
   gem "launchy"
   gem "geckodriver-helper"
-  gem "selenium-webdriver"
+  gem "webdrivers", "~> 5.0"
   gem "simplecov", "~> 0.21"
   gem "simplecov-lcov"
 end
