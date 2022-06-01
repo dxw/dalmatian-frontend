@@ -26,7 +26,7 @@ gem "uglifier", ">= 1.3.0"
 
 group :development do
   gem "better_errors", "< 2.9.2"
-  gem "listen", ">= 3.0.5", "< 3.4"
+  gem "listen", ">= 3.0.5", "< 3.8"
   gem "html2haml"
   gem "rails_layout"
   gem "spring"

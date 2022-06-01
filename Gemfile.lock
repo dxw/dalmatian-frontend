@@ -177,7 +177,7 @@ GEM
     libv8-node (16.10.0.0)
     libv8-node (16.10.0.0-x86_64-darwin)
     libv8-node (16.10.0.0-x86_64-linux)
-    listen (3.3.4)
+    listen (3.7.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.18.0)
@@ -388,7 +388,7 @@ DEPENDENCIES
   jbuilder (~> 2.10)
   jquery-rails
   launchy
-  listen (>= 3.0.5, < 3.4)
+  listen (>= 3.0.5, < 3.8)
   mini_racer
   mongoid
   pg
