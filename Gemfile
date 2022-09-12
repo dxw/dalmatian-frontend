@@ -18,7 +18,7 @@ gem "mini_racer"
 gem "mongoid"
 gem "puma", "~> 5.6"
 gem "rollbar"
-gem "rails", "~> 6.0"
+gem "rails", "~> 7.0"
 gem "sass-rails", "~> 6.0"
 gem "simple_form"
 gem "tzinfo-data", platforms: %i[mingw mswin x64_mingw jruby]
